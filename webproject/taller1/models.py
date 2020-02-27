@@ -20,5 +20,8 @@ class Userid_Timestamp(models.Model):
     song = models.CharField(max_length=400)
     userid_Profile = models.ForeignKey(Userid_Profile, on_delete=models.CASCADE)
     
+    class Meta:
+        ordering = ["-c_timestamp"]
+        
     def __str__(self):
         return str(self.id)

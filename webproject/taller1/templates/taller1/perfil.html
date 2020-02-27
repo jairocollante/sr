@@ -1,0 +1,50 @@
+{% extends "taller1/template.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="card mt-4">          
+	<div class="card-body">
+		<h3 class="card-title">Perfil del usuario " {{usuario.userid}} "</h3>		
+		<p class="card-text">Genero: {{usuario.gender}}.</p>	
+		<p>Edad: {{usuario.age}}.</p>
+		<p>Pais: {{usuario.country}}.</p>
+		<p>Registrado: {{usuario.registered}}.</p>
+	</div>
+</div>
+
+
+<div class="card card-outline-secondary my-4">
+	<div class="card-header">
+		Iteracción del Usuario   {{usuario_activo}}
+	</div>
+	<div class="card-body">
+		
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Código 1</th>
+		      <th scope="col">Código 2</th>
+		      <th scope="col">Artista</th>
+		      <th scope="col">Disco</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in iteracciones %} 
+			<tr> 
+				<th scope="row">{{i.userid_Profile.userid}}</th>
+				<td>{{i.codigo1}}</td>
+				<td>{{i.codigo2}}</td>
+				<td>{{i.artist}}</td>
+				<td>{{i.song}}</td>			
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
+		<hr>           
+	</div>
+</div>
+
+{% endblock contenido %}

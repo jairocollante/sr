@@ -1,0 +1,18 @@
+{% extends "taller1/template.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="card card-outline-secondary my-4">
+	<div class="card-header">
+		Hacer el logeo  {{titulo}}
+	</div>
+	<div class="card-body">
+		<form method="post">{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Enviar">
+		</form>
+	</div>
+</div>
+
+{% endblock contenido %}
