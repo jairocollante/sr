@@ -32,6 +32,7 @@ class T1LoginView(FormView):
             userProfile = usuario[0]
             print("userProfile",userProfile)
             iteracciones = Userid_Timestamp.objects.filter(userid_Profile=userProfile)
+            print("iteracciones",iteracciones.count())
             return render(request,'taller1/perfil.html',{'usuario':userProfile, 'iteracciones':iteracciones})
         return render(request, self.template_name, {'form': form})
     
