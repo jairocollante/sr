@@ -32,15 +32,17 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
-    'taller1',
-    
+	'django.contrib.sessions',
+    'crispy_forms',
+    'taller1',    
 ]
 
 MIDDLEWARE = [
-   
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
-#ROOT_URLCONF = 'webproject.urls'
+CRISPY_TEMPLATE_PACK = 'bootstrap'
+
 
 TEMPLATES = [
     {
@@ -49,7 +51,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                
+                'django.template.context_processors.request'
             ],
         },
     },

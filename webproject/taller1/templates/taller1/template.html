@@ -39,7 +39,10 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Taller 3</a>
-          </li>          
+          </li> 
+		  <li class="nav-item">
+            <a class="nav-link" href="#">{{ request.session.usuario_activo }}</a>
+          </li> 		  
         </ul>
       </div>
     </div>
@@ -53,11 +56,16 @@
       <div class="col-lg-3">
         <h1 class="my-4">Actividades</h1>
         <div class="list-group">
-          <a href="{% url 't1_login' %}" class="list-group-item active">Login</a>
-		  <a href="#" class="list-group-item">Perfil</a>
+          <a href="{% url 't1_login' %}" class="list-group-item">Login</a>
+		  <a href="{% url 't1_perfil' %}" class="list-group-item">Usuario Activo</a>
+		  <a href="{% url 't1_modeloUU' %}" class="list-group-item">Modelo Usuario-Usuario</a>
+		  <a href="{% url 't1_modeloII' %}" class="list-group-item">Modelo Item-Item</a>
+		  <a href="{% url 't1_nuevoP' %}" class="list-group-item">Nuevo Usuario</a>
+		  <a href="{% url 't1_nuevoT' %}" class="list-group-item">Nueva Iteracción</a>
           <a href="{% url 't1_listaUsuarios' %}" class="list-group-item">Lista de usuarios</a>
           
         </div>
+		<h4 class="my-4">{{ request.session.usuario_activo }}</h4>
       </div>
       <!-- /.col-lg-3 -->
 	  <div class="col-lg-9">

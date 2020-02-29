@@ -1,16 +1,17 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Userid_Profile(models.Model):
-    userid = models.CharField(max_length=20)
+    userid = models.CharField(primary_key=True, max_length=20)
     gender = models.CharField(max_length=1, blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
     registered = models.CharField(max_length=100, blank=True, null=True)
     
     def __str__(self):
-        return str(self.id)
+        return str(self.userid)
     
 class Userid_Timestamp(models.Model):
     c_timestamp = models.CharField(max_length=30)
@@ -25,3 +26,5 @@ class Userid_Timestamp(models.Model):
         
     def __str__(self):
         return str(self.id)
+		
+		
