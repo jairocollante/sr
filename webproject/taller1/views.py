@@ -8,6 +8,8 @@ from django.views.generic.edit import FormView
 from django.views.generic import ListView
 from django.views import View
 
+from django.core.paginator import Paginator
+
 from taller1.models import Userid_Profile, Userid_Timestamp
 
 class T1ModeloUserUser(View):
@@ -64,9 +66,12 @@ class T1PerfilView(View):
         userid = request.session.get('usuario_activo')
         if userid:
             userProfile = Userid_Profile.objects.get(pk=userid)
-            iteracciones = Userid_Timestamp.objects.filter(userid_Profile=userProfile)
-            print("iteracciones=",iteracciones.count())
-            return render(request,'taller1/perfil.html',{'usuario':userProfile,'iteracciones':iteracciones})
+            iteracciones_list = Userid_Timestamp.objects.filter(userid_Profile=userProfile)
+            print("iteracciones_list=",iteracciones_list.count())
+            paginator = Paginator(list(iteracciones_list), 50)
+            page_number = request.GET.get('page')
+            iteracciones = paginator.get_page(page_number)
+            return render(request,'taller1/perfil.html',{'usuario':userProfile,'page_obj':iteracciones})
         else:
             return redirect('t1_login')
 
