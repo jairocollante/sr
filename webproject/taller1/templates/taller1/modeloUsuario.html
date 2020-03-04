@@ -16,7 +16,30 @@
 		Utilice un modelo basado en Índice de Jaccard
 	</div>
 	<div class="card-body">
-		<p>Utilice un modelo basado en Índice de Jaccard</p>
+		<p>Perfiles similares basado en Índice de Jaccard, debido a la cantidad de datos se buscan Perfiles con Indice = 1</p>
+		
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Genero</th>
+		      <th scope="col">Edad</th>
+		      <th scope="col">Pais</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in lista_similares %} 
+			<tr> 
+				<th scope="row">{{i.userid}}</th>
+				<td>{{i.gender}}</td>
+				<td>{{i.age}}</td>
+				<td>{{i.country}}</td>	
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
+		
 		
 		<hr>           
 	</div>

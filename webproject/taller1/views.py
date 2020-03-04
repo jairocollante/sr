@@ -12,10 +12,21 @@ from django.core.paginator import Paginator
 
 from taller1.models import Userid_Profile, Userid_Timestamp
 
+from taller1.algoritmos import IndiceJaccard
+
 class T1ModeloUserUser(View):
     template_name='taller1/modeloUsuario.html'
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {})
+    
+    def get(self, request, *args, **kwargs):        
+        userid = request.session.get('usuario_activo')
+        if userid:
+            userProfile = Userid_Profile.objects.get(pk=userid)
+            lista_similares =  IndiceJaccard.listaUsuariosSimilares(self,userProfile)
+            return render(request, self.template_name, {'lista_similares':lista_similares})
+        else:
+            return redirect('t1_login')
+        
+    
 	
 class T1ModeloItemItem(View):
     template_name='taller1/modeloItem.html'
