@@ -8,7 +8,7 @@ class T1LoginForm(forms.Form):
     userid = forms.CharField(label='Usuario:',max_length=20, widget=forms.TextInput(
                                     attrs={'class':'form-control',
                                         'placeholder':'usuario_1',}))
-    pws = forms.CharField(label='Contraseña:',max_length=20, widget=forms.TextInput(
+    pws = forms.CharField(label='Contraseña:',max_length=20, required=False, widget=forms.TextInput(
                                     attrs={'class':'form-control'}))
     
     def doLogin(self):
