@@ -18,11 +18,21 @@ class IndiceJaccard():
                 
     
     def calcularUsuarioPerfil(self,usuario_activo, usuario_comparado):
-        longitud = 3
+        tam_ua = IndiceJaccard.tamanoUsuarioPerfil(self, usuario_activo)
+        tam_uc = IndiceJaccard.tamanoUsuarioPerfil(self, usuario_comparado)
         interseccion = IndiceJaccard.interseccionUsuarioPerfil(self,usuario_activo, usuario_comparado)
-        indice = interseccion / (longitud + longitud - interseccion)
+        indice = interseccion / (tam_ua + tam_uc - interseccion)
         return indice
         
+    def tamanoUsuarioPerfil(self,usuario_perfil):
+        tamano = 0
+        if(usuario_perfil.gerder):
+            tamano = tamano +1
+        if(usuario_perfil.age):
+            tamano = tamano +1
+        if(usuario_perfil.country):
+            tamano = tamano +1
+        return tamano          
         
     def interseccionUsuarioPerfil(self,usuario_activo, usuario_comparado):
         interseccion = 0
