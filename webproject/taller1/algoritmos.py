@@ -18,11 +18,11 @@ class IndiceJaccard():
             usuario_calculado.indiceJ = indice
             lista_similares.append(usuario_calculado)
 			
-        lista_similares.sort(key = IndiceJaccard.indiceJ, reverse = True)
+        lista_similares = sorted(lista_similares,key =IndiceJaccard.indiceJ, reverse = True)
         return lista_similares
     
     def indiceJ(usuario_calculado):
-	    return usuario_calculado.indiceJ	
+        return str(usuario_calculado.indiceJ)	
     
     def calcularUsuarioPerfil(self,usuario_activo, usuario_comparado):
         tam_ua = IndiceJaccard.tamanoUsuarioPerfil(self, usuario_activo)
