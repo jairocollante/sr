@@ -30,6 +30,13 @@ class Userid_Profile(models.Model):
 class Userid_ProfileCalculado(Userid_Profile):
     userid_profile = Userid_Profile()
     indiceJ = models.FloatField()
+    cosine = models.FloatField()
+    
+    def indiceJaccard(self):
+        return str(self.indiceJ)
+    
+    def similarityCosine(self):
+        return str(self.cosine)
 
 class Userid_Timestamp(models.Model):
     c_timestamp = models.CharField(max_length=30)

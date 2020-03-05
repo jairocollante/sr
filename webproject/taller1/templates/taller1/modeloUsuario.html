@@ -51,7 +51,7 @@
 		  </thead>
 		  <tbody>
 		
-			{% for i in lista_similares %} 
+			{% for i in lista_similares_jaccard %} 
 			<tr> 
 				<th scope="row">{{i.userid_profile.userid}}</th>
 				<td>{{i.userid_profile.gender}}</td>
@@ -70,11 +70,59 @@
 		
 <div class="card card-outline-secondary my-4">
 	<div class="card-header">
-		Utilice un modelo basado en distancias coseno
+		Modelo basado en la similaridad coseno
 	</div>
 	<div class="card-body">
-		<p>Utilice un modelo basado en distancias coseno.</p>
-
+	
+	    <p>Perfil del usuario activo</p>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Genero</th>
+		      <th scope="col">Edad</th>
+		      <th scope="col">Pais</th>
+			  <th scope="col">Indice Jaccard</th>
+		    </tr>
+		  </thead>
+		  <tbody>		
+			<tr> 
+				<th scope="row">{{usuario_activo.userid}}</th>
+				<td>{{usuario_activo.gender}}</td>
+				<td>{{usuario_activo.age}}</td>
+				<td>{{usuario_activo.country}}</td>	
+				<td>1</td>
+			</tr>	
+		  <tbody>
+		</table>
+		
+		<p>Perfiles similares al usuario activo. <small class="text-muted">Se muestran maximo 50 perfiles</small></p>
+		
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Genero</th>
+		      <th scope="col">Edad</th>
+		      <th scope="col">Pais</th>
+			  <th scope="col">Similaridad Coseno</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in lista_similares_cosine %} 
+			<tr> 
+				<th scope="row">{{i.userid_profile.userid}}</th>
+				<td>{{i.userid_profile.gender}}</td>
+				<td>{{i.userid_profile.age}}</td>
+				<td>{{i.userid_profile.country}}</td>	
+				<td>{{i.cosine|floatformat:3}}</td>
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
+		
+		
 		<hr>           
 	</div>
 </div>
