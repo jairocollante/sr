@@ -5,18 +5,39 @@
 	
 <div class="card mt-4">          
 	<div class="card-body">
-		<h3 class="card-title">Modelo Usuario - Usuario</h3>
-		<h4>Objetivos</h4>
-		<p class="card-text">Modelo Usuario - Usuario</p>
+		<h3 class="card-title">Modelo Usuario - Usuario</h3>		
 	</div>
 </div>        
 
 <div class="card card-outline-secondary my-4">
 	<div class="card-header">
-		Utilice un modelo basado en Índice de Jaccard
+		Modelo basado en Índice de Jaccard
 	</div>
 	<div class="card-body">
-		<p>Perfiles similares basado en Índice de Jaccard, debido a la cantidad de datos se buscan Perfiles con Indice = 1</p>
+	
+	    <p>Perfil del usuario activo</p>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Genero</th>
+		      <th scope="col">Edad</th>
+		      <th scope="col">Pais</th>
+			  <th scope="col">Indice Jaccard</th>
+		    </tr>
+		  </thead>
+		  <tbody>		
+			<tr> 
+				<th scope="row">{{usuario_activo.userid}}</th>
+				<td>{{usuario_activo.gender}}</td>
+				<td>{{usuario_activo.age}}</td>
+				<td>{{usuario_activo.country}}</td>	
+				<td>1</td>
+			</tr>	
+		  <tbody>
+		</table>
+		
+		<p>Perfiles similares al usuario activo. <small class="text-muted">Se muestran maximo 50 perfiles</small></p>
 		
 		<table class="table table-hover">
 		  <thead>
@@ -25,16 +46,18 @@
 		      <th scope="col">Genero</th>
 		      <th scope="col">Edad</th>
 		      <th scope="col">Pais</th>
+			  <th scope="col">Indice Jaccard</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		
 			{% for i in lista_similares %} 
 			<tr> 
-				<th scope="row">{{i.userid}}</th>
-				<td>{{i.gender}}</td>
-				<td>{{i.age}}</td>
-				<td>{{i.country}}</td>	
+				<th scope="row">{{i.userid_profile.userid}}</th>
+				<td>{{i.userid_profile.gender}}</td>
+				<td>{{i.userid_profile.age}}</td>
+				<td>{{i.userid_profile.country}}</td>	
+				<td>{{i.indiceJ|floatformat:2}}</td>
 			</tr>			
 			{% endfor %}
 		  <tbody>
@@ -51,7 +74,7 @@
 	</div>
 	<div class="card-body">
 		<p>Utilice un modelo basado en distancias coseno.</p>
-		<small class="text-muted">.</small>
+
 		<hr>           
 	</div>
 </div>

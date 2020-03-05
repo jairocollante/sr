@@ -27,7 +27,10 @@ class Userid_Profile(models.Model):
     def __str__(self):
         return str(self.userid)
     
-    
+class Userid_ProfileCalculado(Userid_Profile):
+    userid_profile = Userid_Profile()
+    indiceJ = models.FloatField()
+
 class Userid_Timestamp(models.Model):
     c_timestamp = models.CharField(max_length=30)
     codigo1 = models.CharField(max_length=50, blank=True, null=True)

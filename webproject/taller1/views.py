@@ -22,10 +22,9 @@ class T1ModeloUserUser(View):
         if userid:
             userProfile = Userid_Profile.objects.get(pk=userid)
             lista_similares =  IndiceJaccard.listaUsuariosSimilares(self,userProfile)
-            return render(request, self.template_name, {'lista_similares':lista_similares})
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares':lista_similares})
         else:
             return redirect('t1_login')
-        
     
 	
 class T1ModeloItemItem(View):

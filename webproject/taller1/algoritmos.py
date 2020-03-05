@@ -1,4 +1,4 @@
-from taller1.models import Userid_Profile
+from taller1.models import Userid_Profile, Userid_ProfileCalculado
 
 
 class IndiceJaccard():
@@ -8,14 +8,21 @@ class IndiceJaccard():
         perfiles = Userid_Profile.objects.todos();
         
         for usuario_comparado in perfiles:
-            if(len(lista_similares)==10):
+            if(len(lista_similares)==50):
                 return lista_similares
+            if(usuario_activo.userid == usuario_comparado.userid):
+                continue
             indice  = IndiceJaccard.calcularUsuarioPerfil(self,usuario_activo, usuario_comparado)
-            if(indice == 1):
-                lista_similares.append(usuario_comparado)
-                
+            usuario_calculado = Userid_ProfileCalculado()
+            usuario_calculado.userid_profile = usuario_comparado
+            usuario_calculado.indiceJ = indice
+            lista_similares.append(usuario_calculado)
+			
+        lista_similares.sort(key = IndiceJaccard.indiceJ, reverse = True)
         return lista_similares
-                
+    
+    def indiceJ(usuario_calculado):
+	    return usuario_calculado.indiceJ	
     
     def calcularUsuarioPerfil(self,usuario_activo, usuario_comparado):
         tam_ua = IndiceJaccard.tamanoUsuarioPerfil(self, usuario_activo)
@@ -26,7 +33,7 @@ class IndiceJaccard():
         
     def tamanoUsuarioPerfil(self,usuario_perfil):
         tamano = 0
-        if(usuario_perfil.gerder):
+        if(usuario_perfil.gender):
             tamano = tamano +1
         if(usuario_perfil.age):
             tamano = tamano +1
@@ -36,15 +43,15 @@ class IndiceJaccard():
         
     def interseccionUsuarioPerfil(self,usuario_activo, usuario_comparado):
         interseccion = 0
-        
-        if(usuario_activo.userid == usuario_comparado.userid):
-            return interseccion
-        if(usuario_activo.gender == usuario_comparado.gender):
-            interseccion = interseccion + 1
-        if(usuario_activo.age == usuario_comparado.age):
-            interseccion = interseccion + 1
-        if(usuario_activo.country == usuario_comparado.country):
-            interseccion = interseccion + 1
+        if(usuario_activo.gender):
+            if(usuario_activo.gender == usuario_comparado.gender):
+                interseccion = interseccion + 1
+        if(usuario_activo.age):
+            if(usuario_activo.age == usuario_comparado.age):
+                interseccion = interseccion + 1
+        if(usuario_activo.country):
+            if(usuario_activo.country == usuario_comparado.country):
+                interseccion = interseccion + 1
             
         return interseccion
 
