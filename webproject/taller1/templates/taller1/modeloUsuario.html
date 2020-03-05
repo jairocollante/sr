@@ -113,7 +113,7 @@
 			{% for i in lista_similares_cosine %} 
 			<tr> 
 				<th scope="row">{{i.userid_profile.userid}}</th>
-				<td>{{i.userid_profile.gender}}</td>
+				<td>{% if i.userid_profile.gender %}  {{i.userid_profile.gender}}  {% endif %}</td>
 				<td>{{i.userid_profile.age}}</td>
 				<td>{{i.userid_profile.country}}</td>	
 				<td>{{i.cosine|floatformat:3}}</td>

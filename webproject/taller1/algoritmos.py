@@ -14,6 +14,7 @@ class IndiceJaccard():
                 continue
             indice  = IndiceJaccard.calcularUsuarioPerfil(self,usuario_activo, usuario_comparado)
             usuario_calculado = Userid_ProfileCalculado()
+            usuario_calculado.userid_profile = Userid_Profile()
             usuario_calculado.userid_profile = usuario_comparado
             usuario_calculado.indiceJ = indice
             lista_similares.append(usuario_calculado)
@@ -62,38 +63,40 @@ import math
 
 class SimilitudCoseno():
     def listaUsuariosSimilares(self,usuario_activo):
-        lista_similares=[]
+        lista_similares_cosine=[]
         
         perfiles = Userid_Profile.objects.todos();
         df_perfiles = pd.DataFrame(list(perfiles.values())) 
         
         
-        genderNumber = {'m':1,'f':2}
+        genderNumber =  SimilitudCoseno.transforGender(self,df_perfiles) 
         countryNumber = SimilitudCoseno.transforCountry(self,df_perfiles)       
         
         df_perfiles = SimilitudCoseno.procesarDatos(self,df_perfiles,genderNumber,countryNumber)    
         
         df_usuario_activo= pd.DataFrame(data=[[usuario_activo.userid, usuario_activo.gender ,usuario_activo.age,usuario_activo.country ,usuario_activo.registered ,genderNumber[usuario_activo.gender],countryNumber[usuario_activo.country] ]], columns=df_perfiles.columns)            
         
+        
+        
         for index, usuario_comparado in df_perfiles.iterrows():
-            #print(row['c1'], row['c2'])            
-            if(len(lista_similares)==49):
-                return lista_similares
+            if(len(lista_similares_cosine)==49):
+                return lista_similares_cosine
             if(usuario_activo.userid == usuario_comparado.userid):
                 continue
             
             cosine  = SimilitudCoseno.calcularUsuarioPerfil(self,df_usuario_activo, usuario_comparado)
             usuario_calculado = Userid_ProfileCalculado()
+            usuario_calculado.userid_profile = Userid_Profile()
             usuario_calculado.userid_profile.userid = usuario_comparado.get(key='userid')
             usuario_calculado.userid_profile.gender = usuario_comparado.get(key='gender')
             usuario_calculado.userid_profile.age = usuario_comparado.get(key='age')
             usuario_calculado.userid_profile.country = usuario_comparado.get(key='country')
             usuario_calculado.userid_profile.registered = usuario_comparado.get(key='registered')
             usuario_calculado.cosine = cosine
-            lista_similares.append(usuario_calculado)
+            lista_similares_cosine.append(usuario_calculado)
             
-        lista_similares = sorted(lista_similares,key =Userid_ProfileCalculado.similarityCosine, reverse = True)
-        return lista_similares
+        lista_similares_cosine = sorted(lista_similares_cosine,key =Userid_ProfileCalculado.similarityCosine, reverse = True)
+        return lista_similares_cosine
         
     def calcularUsuarioPerfil(self,df_usuario_activo, usuario_comparado):
         df_usuario_comparado = pd.DataFrame([usuario_comparado],columns=df_usuario_activo.columns)
@@ -130,6 +133,17 @@ class SimilitudCoseno():
             i=i+1
             
         return ol
+    
+    def transforGender(self,df_perfiles):
+        gu = df_perfiles.gender.unique()        
+        ol = {}
+        i=1
+        for g in gu:
+            ol[g]=i
+            i=i+1
+            
+        return ol
+
         
     
     def procesarDatos(self,df_perfiles,genderNumber, countryNumber):  
