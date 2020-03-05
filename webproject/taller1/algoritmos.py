@@ -102,17 +102,28 @@ class SimilitudCoseno():
         df_usuario_comparado = pd.DataFrame([usuario_comparado],columns=df_usuario_activo.columns)
         
         pg = int(df_usuario_activo.genderN)  * int(df_usuario_comparado.genderN)
-        pa = int(df_usuario_activo.age)      * int(df_usuario_comparado.age)
+        pa=0
+        if  df_usuario_activo.age.size >1 :
+            if df_usuario_comparado.age.size >1 :
+                pa = int(df_usuario_activo.age)      * int(df_usuario_comparado.age)
         pc = int(df_usuario_activo.countryN) * int(df_usuario_comparado.countryN)
         
+        
         cg_a = int(df_usuario_activo.genderN)  * int(df_usuario_activo.genderN)
-        ca_a = int(df_usuario_activo.age)      * int(df_usuario_activo.age)
+        ca_a=0
+        if df_usuario_activo.age.size >1 :
+            if df_usuario_comparado.age.size >1 :
+                ca_a = int(df_usuario_activo.age)      * int(df_usuario_activo.age)
         cc_a = int(df_usuario_activo.countryN) * int(df_usuario_activo.countryN)
+        
         
         m_a = math.sqrt(cg_a+ca_a+cc_a)
         
         cg_c = int(df_usuario_comparado.genderN)  * int(df_usuario_comparado.genderN)
-        ca_c = int(df_usuario_comparado.age)      * int(df_usuario_comparado.age)
+        ca_c=0
+        if df_usuario_activo.age.size >1 :
+            if df_usuario_comparado.age.size >1 :
+                ca_c = int(df_usuario_comparado.age)      * int(df_usuario_comparado.age)
         cc_c = int(df_usuario_comparado.countryN) * int(df_usuario_comparado.countryN)
         
         m_c = math.sqrt(cg_c+ca_c+cc_c)
