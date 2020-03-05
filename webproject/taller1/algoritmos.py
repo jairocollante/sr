@@ -8,7 +8,7 @@ class IndiceJaccard():
         perfiles = Userid_Profile.objects.todos();
         
         for usuario_comparado in perfiles:
-            if(len(lista_similares)==50):
+            if(len(lista_similares)==49):
                 return lista_similares
             if(usuario_activo.userid == usuario_comparado.userid):
                 continue

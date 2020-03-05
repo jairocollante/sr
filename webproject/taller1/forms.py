@@ -5,11 +5,8 @@ from django.forms import ModelForm
 from taller1.models import Userid_Profile, Userid_Timestamp
 
 class T1LoginForm(forms.Form):
-    userid = forms.CharField(label='Usuario:',max_length=20, widget=forms.TextInput(
-                                    attrs={'class':'form-control',
-                                        'placeholder':'usuario_1',}))
-    pws = forms.CharField(label='Contraseña:',max_length=20, required=False, widget=forms.TextInput(
-                                    attrs={'class':'form-control'}))
+    userid = forms.CharField(label='Usuario:',max_length=20)
+    pws = forms.CharField(label='Contraseña:',max_length=20, required=False)
     
     def doLogin(self):
         print("Hacer login")

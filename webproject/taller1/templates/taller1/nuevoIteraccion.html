@@ -10,7 +10,7 @@
 	</div>
 	<div class="card-body">	  
 		<form method="post">{% csrf_token %}		
-			{% crispy form %}
+			{{ form|crispy }}
 			<input type="submit" value="Enviar">			
 		</form>	  
 	</div>
