@@ -197,17 +197,12 @@ class CorrelacionPearson():
     def calcularUsuarioPerfil(self,df_usuario_activo, usuario_comparado):
         df_usuario_comparado = pd.DataFrame([usuario_comparado],columns=df_usuario_activo.columns)
         
-        #Rellenar valores vacios
+        #Rellenar valores vacio        
         
-        df_usuario_activo.age.fillna(0)
-        df_usuario_comparado.age.fillna(0)
-        
-        if str(df_usuario_activo.age.values[0]) =='':
+        if str(df_usuario_activo.age.values[0]) =='' or str(df_usuario_activo.age.values[0]) =='nan':
             df_usuario_activo.age=0
         
-        if str(df_usuario_comparado.age.values[0]) == '':
-            
-        
+        if str(df_usuario_comparado.age.values[0]) == '' or str(df_usuario_comparado.age.values[0])=='nan':
             df_usuario_comparado.age=0        
         
         ua = np.array([df_usuario_activo.genderN.values[0],   df_usuario_activo.age.values[0],    df_usuario_activo.countryN.values[0]])
