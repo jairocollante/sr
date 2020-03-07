@@ -12,7 +12,7 @@ from django.core.paginator import Paginator
 
 from taller1.models import Userid_Profile, Userid_Timestamp
 
-from taller1.algoritmos import IndiceJaccard, SimilitudCoseno
+from taller1.algoritmos import IndiceJaccard, SimilitudCoseno, CorrelacionPearson
 
 class T1ModeloUserUser(View):
     template_name='taller1/modeloUsuario.html'
@@ -21,11 +21,15 @@ class T1ModeloUserUser(View):
         userid = request.session.get('usuario_activo')
         if userid:
             userProfile = Userid_Profile.objects.get(pk=userid)
-            lista_similares_jaccard =  IndiceJaccard.listaUsuariosSimilares(self,userProfile)
+            perfiles = Userid_Profile.objects.todos();
             
-            lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile)
+            lista_similares_jaccard =  IndiceJaccard.listaUsuariosSimilares(self,userProfile,perfiles)
+            
+            lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile,perfiles)
+            
+            lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
         
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine})
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine,'lista_similares_pearson':lista_similares_pearson})
         else:
             return redirect('t1_login')
     
