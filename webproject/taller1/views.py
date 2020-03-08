@@ -10,7 +10,7 @@ from django.views import View
 
 from django.core.paginator import Paginator
 
-from taller1.models import Userid_Profile, Userid_Timestamp
+from taller1.models import Userid_Profile, Userid_Timestamp, Userid_NUserId
 
 from taller1.algoritmos import IndiceJaccard, SimilitudCoseno, CorrelacionPearson
 
@@ -21,15 +21,20 @@ class T1ModeloUserUser(View):
         userid = request.session.get('usuario_activo')
         if userid:
             userProfile = Userid_Profile.objects.get(pk=userid)
-            perfiles = Userid_Profile.objects.todos();
             
-            lista_similares_jaccard =  IndiceJaccard.listaUsuariosSimilares(self,userProfile,perfiles)
+            userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
             
-            lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile,perfiles)
+            userCode = userCode[0].n_userid
+            perfiles = {}#Userid_Profile.objects.todos();
+            print("userid=",userid, " userCode=", userCode)
+            lista_similares_jaccard =  IndiceJaccard.listaUsuariosSimilares(self,userCode)
             
-            lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard})
+           # lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile,perfiles)
+            
+           # lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
         
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine,'lista_similares_pearson':lista_similares_pearson})
+           # return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine,'lista_similares_pearson':lista_similares_pearson})
         else:
             return redirect('t1_login')
     

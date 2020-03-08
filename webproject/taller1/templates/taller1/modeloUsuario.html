@@ -37,27 +37,21 @@
 		  <tbody>
 		</table>
 		
-		<p>Perfiles similares al usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
+		<p>Recomendaciones de artista para el usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
 		
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
-		      <th scope="col">User id</th>
-		      <th scope="col">Genero</th>
-		      <th scope="col">Edad</th>
-		      <th scope="col">Pais</th>
-			  <th scope="col">Indice Jaccard</th>
+		      <th scope="col">No.</th>
+		      <th scope="col">Artista</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		
 			{% for i in lista_similares_jaccard %} 
 			<tr> 
-				<th scope="row">{{i.userid_profile.userid}}</th>
-				<td>{{i.userid_profile.gender}}</td>
-				<td>{{i.userid_profile.age}}</td>
-				<td>{{i.userid_profile.country}}</td>	
-				<td>{{i.indiceJ|floatformat:2}}</td>
+				<th scope="row">{{i}}</th>
+				<td>{{i}}</td>
 			</tr>			
 			{% endfor %}
 		  <tbody>
