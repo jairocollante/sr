@@ -72,14 +72,14 @@ class Userid_Rating(models.Model):
 		
 class Userid_NUserId(models.Model):
     userid = models.CharField(max_length=20)
-    n_userid = models.IntegerField(primary_key=True)
+    n_userid = models.IntegerField(null=True)
    
     def __str__(self):
         return str(self.userid)
 
 class Artist_NArtist(models.Model):
     artist = models.CharField(max_length=300)
-    n_artist = models.IntegerField(primary_key=True)
+    n_artist = models.IntegerField(null=True)
    
     def __str__(self):
         return str(self.artist)
