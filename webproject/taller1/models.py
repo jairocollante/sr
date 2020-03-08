@@ -62,8 +62,8 @@ class Userid_Timestamp(models.Model):
         return str(self.id)
 		
 class Userid_Rating(models.Model):
-    userid = models.IntegerField(null=False)
-    artid = models.IntegerField(null=False)
+    user_id = models.IntegerField(null=False)
+    art_id = models.IntegerField(null=False)
     count = models.IntegerField(null=False)
     rating = models.IntegerField(null=False)
    
