@@ -61,4 +61,25 @@ class Userid_Timestamp(models.Model):
     def __str__(self):
         return str(self.id)
 		
+class Userid_Rating(models.Model):
+    n_userid = models.IntegerField(null=False)
+    n_artist = models.IntegerField(null=False)
+    count = models.IntegerField(null=False)
+    raiting = models.IntegerField(null=False)
+   
+    def __str__(self):
+        return str(self.n_userid + "-" + self.n_artist)
 		
+class Userid_NUserId(models.Model):
+    userid = models.CharField(primary_key=True, max_length=20)
+    n_userid = models.IntegerField(null=False)
+   
+    def __str__(self):
+        return str(self.userid)
+
+class Artist_NArtist(models.Model):
+    artist = models.CharField(primary_key=True, max_length=300)
+    n_artist = models.IntegerField(null=False)
+   
+    def __str__(self):
+        return str(self.artist)
