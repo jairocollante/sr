@@ -61,11 +61,11 @@ class Userid_Timestamp(models.Model):
     def __str__(self):
         return str(self.id)
 		
-class Userid_Rating(models.Model):
-    user_id = models.IntegerField(null=False)
+class Userid_Rating(models.Model):    
     art_id = models.IntegerField(null=False)
     count = models.IntegerField(null=False)
     rating = models.IntegerField(null=False)
+    userid_Profile = models.ForeignKey(Userid_Profile, on_delete=models.CASCADE)
    
     def __str__(self):
         return str(self.n_userid + "-" + self.n_artist)
