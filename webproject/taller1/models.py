@@ -65,10 +65,10 @@ class Userid_Rating(models.Model):
     art_id = models.IntegerField(null=False)
     count = models.IntegerField(null=False)
     rating = models.IntegerField(null=False)
-    userid_Profile = models.ForeignKey(Userid_Profile, on_delete=models.CASCADE)
+    user_id = models.IntegerField(null=False)
    
     def __str__(self):
-        return str(self.n_userid + "-" + self.n_artist)
+        return str(self.user_id + "-" + self.art_id)
 		
 class Userid_NUserId(models.Model):
     userid = models.CharField(max_length=20)
