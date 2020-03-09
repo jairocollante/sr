@@ -9,9 +9,7 @@ from sqlalchemy import create_engine
 
 from django.db import connection
 
-
-
-
+#
 class IndiceJaccard():
     
     def listaUsuariosSimilares(self,usuario_activo):
@@ -148,7 +146,6 @@ class IndiceJaccard():
             lista_resultante.append(itemNames[i])
             
         return lista_resultante
-    
 
 import pandas as pd
 import numpy as np
@@ -182,6 +179,41 @@ class SimilitudCoseno():
                     and "ut"."codigo1"= "a"."artist"
                     and "a"."n_artist" ='''+art_id+'''; ''', connection)
         return udata
+
+    def calcularUsuarioPerfil(self,df_usuario_activo, usuario_comparado):
+        df_usuario_comparado = pd.DataFrame([usuario_comparado],columns=df_usuario_activo.columns)
+        
+        pg = int(df_usuario_activo.genderN)  * int(df_usuario_comparado.genderN)
+        pa=0
+        if  df_usuario_activo.age.size >1 :
+            if df_usuario_comparado.age.size >1 :
+                pa = int(df_usuario_activo.age)      * int(df_usuario_comparado.age)
+        pc = int(df_usuario_activo.countryN) * int(df_usuario_comparado.countryN)
+        
+        
+        cg_a = int(df_usuario_activo.genderN)  * int(df_usuario_activo.genderN)
+        ca_a=0
+        if df_usuario_activo.age.size >1 :
+            if df_usuario_comparado.age.size >1 :
+                ca_a = int(df_usuario_activo.age)      * int(df_usuario_activo.age)
+        cc_a = int(df_usuario_activo.countryN) * int(df_usuario_activo.countryN)
+        
+        
+        m_a = math.sqrt(cg_a+ca_a+cc_a)
+        
+        cg_c = int(df_usuario_comparado.genderN)  * int(df_usuario_comparado.genderN)
+        ca_c=0
+        if df_usuario_activo.age.size >1 :
+            if df_usuario_comparado.age.size >1 :
+                ca_c = int(df_usuario_comparado.age)      * int(df_usuario_comparado.age)
+        cc_c = int(df_usuario_comparado.countryN) * int(df_usuario_comparado.countryN)
+        
+        m_c = math.sqrt(cg_c+ca_c+cc_c)
+        
+        cosine =(pg+pa+pc)/(m_a * m_c)
+        
+        return cosine
+
     
     def buscarListaPrediccion(self, usuario_activo):
         sql='''select distinct ("ut"."artist")
