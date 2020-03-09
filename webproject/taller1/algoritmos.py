@@ -13,8 +13,10 @@ from django.db import connection
 class IndiceJaccard():
     
     def listaUsuariosSimilares(self,usuario_activo):
-        lista_similares=[]  
         
+        cantidad = 10
+        
+        lista_similares=[]          
         udata = IndiceJaccard.cargarDatosUserTimeStamp(self)     
         ratingsby = udata.groupby(['user_id','art_id','artname'])['art_id'].count().reset_index(name='count')
                         
@@ -28,9 +30,31 @@ class IndiceJaccard():
             itemsPerUser[user].add(item)
             itemNames[item] = d['artname']        
         
-        lista_similares = IndiceJaccard.rs_user_user_jaccard(self,usuario_activo,usersPerItem,itemsPerUser,itemNames,10)
+        lista_similares = IndiceJaccard.rs_user_user_jaccard(self,usuario_activo,usersPerItem,itemsPerUser,itemNames,cantidad)
         
-        return lista_similares
+        return lista_similares[:cantidad]
+    
+    def listaItemsSimilares(self,usuario_activo):
+        
+        cantidad =10
+        
+        lista_similares=[]  
+        udata = IndiceJaccard.cargarDatosUserTimeStamp(self)     
+        ratingsby = udata.groupby(['user_id','art_id','artname'])['art_id'].count().reset_index(name='count')
+                        
+        usersPerItem = defaultdict(set)
+        itemsPerUser =defaultdict(set)
+        itemNames={}
+        
+        for i,d in ratingsby.iterrows():
+            user,item = d['user_id'], d['art_id']
+            usersPerItem[item].add(user)
+            itemsPerUser[user].add(item)
+            itemNames[item] = d['artname']        
+        
+        lista_similares = IndiceJaccard.rs_user_item_jaccard(self,usuario_activo,usersPerItem,itemsPerUser,itemNames,cantidad)
+                
+        return lista_similares[:cantidad]
     
     def cargarDatosUserTimeStamp(self):
         udata = pd.read_sql_query('''select "ut"."userid_Profile_id" as "userid","ut"."c_timestamp" as "timestamp"
@@ -41,7 +65,7 @@ class IndiceJaccard():
                     taller1_artist_nartist as a
                     where "ut"."userid_Profile_id"= "un"."userid"
                     and "ut"."codigo1"= "a"."artist"
-                    limit 1000; ''', connection)
+                    limit 10000; ''', connection)
         return udata
     
     def cargarDatosRatings(self):
@@ -102,11 +126,15 @@ class IndiceJaccard():
             items_similares = items_similares + (IndiceJaccard.mostSimilar_item(self,item,usersPerItem,n))
             items_similares = IndiceJaccard.items_no_in_usuario(self,items_similares,lista_items)
             items_similares.sort(reverse=True)
-        return items_similares[:n]
+            
+        lista_resultante=[]
+        for i in items_similares:
+            lista_resultante.append(itemNames[i])
+        
+        return lista_resultante
     
     # dado un usuario recomenida items que no ha consumido en funcion de la similitud jaccard a usuarios que han consumido estos items
-    def rs_user_user_jaccard(self,userid,usersPerItem,itemsPerUser,itemNames,n):
-        
+    def rs_user_user_jaccard(self,userid,usersPerItem,itemsPerUser,itemNames,n):     
         
         lista_items = itemsPerUser[userid]
         lista_usuarios = IndiceJaccard.mostSimilar_usuario(self,userid,itemsPerUser,n)

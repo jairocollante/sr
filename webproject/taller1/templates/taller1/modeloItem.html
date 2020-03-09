@@ -16,9 +16,50 @@
 		Utilice un modelo basado en Índice de Jaccard
 	</div>
 	<div class="card-body">
-		<p>Utilice un modelo basado en Índice de Jaccard</p>
+		<p>Perfil del usuario activo</p>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Genero</th>
+		      <th scope="col">Edad</th>
+		      <th scope="col">Pais</th>
+			  <th scope="col">Indice Jaccard</th>
+		    </tr>
+		  </thead>
+		  <tbody>		
+			<tr> 
+				<th scope="row">{{usuario_activo.userid}}</th>
+				<td>{{usuario_activo.gender}}</td>
+				<td>{{usuario_activo.age}}</td>
+				<td>{{usuario_activo.country}}</td>	
+				<td>1</td>
+			</tr>	
+		  <tbody>
+		</table>
 		
-		<hr>           
+		<p>Recomendaciones de Items para el usuario activo. <small class="text-muted">Se muestran maximo 10 recomendaciones</small></p>
+		
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">No.</th>
+		      <th scope="col">Artista</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in lista_similares_jaccard %} 
+			<tr> 
+				<th scope="row">{{i}}</th>
+				<td>{{i}}</td>
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
+		
+		
+		<hr>        
 	</div>
 </div>
 		
