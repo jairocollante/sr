@@ -9,9 +9,7 @@ from sqlalchemy import create_engine
 
 from django.db import connection
 
-
-
-
+#
 class IndiceJaccard():
     
     def listaUsuariosSimilares(self,usuario_activo):
@@ -126,7 +124,6 @@ class IndiceJaccard():
             lista_resultante.append(itemNames[i])
             
         return lista_resultante
-    
 
 import pandas as pd
 import numpy as np
@@ -199,7 +196,6 @@ class SimilitudCoseno():
         cosine =(pg+pa+pc)/(m_a * m_c)
         
         return cosine
-         
     
     def transforCountry(self,df_perfiles):
         cu = df_perfiles.country.unique()        

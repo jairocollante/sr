@@ -25,9 +25,9 @@
 		  <thead>
 		    <tr>
 		      <th scope="col">User id</th>
-		      <th scope="col">Código 1</th>
-		      <th scope="col">Código 2</th>
+		      <th scope="col">Código Usuario</th>
 		      <th scope="col">Artista</th>
+		      <th scope="col">Código Artista</th>
 		      <th scope="col">Disco</th>
 		    </tr>
 		  </thead>
@@ -36,9 +36,9 @@
 			{% for i in page_obj %} 
 			<tr> 
 				<th scope="row">{{i.userid_Profile.userid}}</th>
-				<td>{{i.codigo1}}</td>
 				<td>{{i.codigo2}}</td>
 				<td>{{i.artist}}</td>
+				<td>{{i.codigo1}}</td>
 				<td>{{i.song}}</td>			
 			</tr>			
 			{% endfor %}
