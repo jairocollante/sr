@@ -69,7 +69,48 @@
 	</div>
 	<div class="card-body">
 		<p>Utilice un modelo basado en distancias coseno.</p>
-		<small class="text-muted">.</small>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Genero</th>
+		      <th scope="col">Edad</th>
+		      <th scope="col">Pais</th>
+			  <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>		
+			<tr> 
+				<th scope="row">{{usuario_activo.userid}}</th>
+				<td>{{usuario_activo.gender}}</td>
+				<td>{{usuario_activo.age}}</td>
+				<td>{{usuario_activo.country}}</td>	
+				<td>1</td>
+			</tr>	
+		  <tbody>
+		</table>
+		
+		<p>Recomendaciones de Items para el usuario activo. <small class="text-muted">Se muestran maximo 10 recomendaciones</small></p>
+		
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">No.</th>
+		      <th scope="col">Artista</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in lista_similares_cosine %} 
+			<tr> 
+				<th scope="row">{{i.0}}</th>
+				<td>{{i.0}}</td>
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
+		
+		
 		<hr>           
 	</div>
 </div>

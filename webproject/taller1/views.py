@@ -29,6 +29,8 @@ class T1ModeloUserUser(View):
             lista_similares_jaccard =  IndiceJaccard.listaUsuariosSimilares(self,userCode)
             
             return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard})
+           
+           
            # lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile,perfiles)
             
            # lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
@@ -49,9 +51,13 @@ class T1ModeloItemItem(View):
             
             userCode = userCode[0].n_userid
             print("userid=",userid, " userCode=", userCode)
+            
+            lista_similares_jaccard={}
             lista_similares_jaccard =  IndiceJaccard.listaItemsSimilares(self,userCode)
             
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard})
+            lista_similares_cosine = SimilitudCoseno.listaItemsSimilares(self,userCode)
+            lista_similares_cosine=lista_similares_cosine.values.tolist();
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine})
            # lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile,perfiles)
             
            # lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
