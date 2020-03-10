@@ -85,16 +85,17 @@ class T1ModeloItemItemJ(View):
     def get(self, request, *args, **kwargs):        
         userid = request.session.get('usuario_activo')
         if userid:
+            ij = IndiceJaccardII()
             userProfile = Userid_Profile.objects.get(pk=userid)
             
-            userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
+            #userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
             
-            userCode = userCode[0].n_userid
-            print("userid=",userid, " userCode=", userCode)
-            
+            #serCode = userCode[0].n_userid
+            #print("userid=",userid, " userCode=", userCode)
+            print("userid=", userid)
             lista_similares_jaccard = {}
             #lista_similares_jaccard = IndiceJaccardII.listaItemsSimilares(self, userCode)
-            lista_similares_jaccard = IndiceJaccardII.items_most_similar(self, userCode)
+            lista_similares_jaccard = ij.items_most_similar(userid)
             
             return render(request, self.template_name, {'usuario_activo':userProfile, 'lista_similares_jaccard':lista_similares_jaccard})
            
