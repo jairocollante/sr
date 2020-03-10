@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
 import random
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
@@ -16,8 +17,8 @@ class Userid_ProfileManager(models.Manager):
 
 class Userid_Profile(models.Model):
     userid = models.CharField(primary_key=True, max_length=20)
-    gender = models.CharField(max_length=1, blank=True, null=True)
-    age = models.IntegerField(blank=True, null=True)
+    gender = models.CharField(max_length=1, blank=True, null=True, choices= ([('m','Masculino'),('f','Femenino')]))
+    age = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(14), MaxValueValidator(70)])
     country = models.CharField(max_length=100, blank=True, null=True)
     registered = models.CharField(max_length=100, blank=True, null=True)
     
@@ -32,15 +33,8 @@ class Userid_ProfileCalculado(Userid_Profile):
     indiceJ = models.FloatField()
     cosine = models.FloatField()
     pearson = models.FloatField()
-    
-    def indiceJaccard(self):
-        return str(self.indiceJ)
-    
-    def similarityCosine(self):
-        return str(self.cosine)
-    
-    def correlacionPearson(self):
-        return str(self.pearson)
+    class Meta:
+        managed = False
 
 class Userid_Timestamp(models.Model):
     c_timestamp = models.CharField(max_length=30)
@@ -76,6 +70,14 @@ class Userid_NUserId(models.Model):
    
     def __str__(self):
         return str(self.userid)
+		
+    def incrementNumber(self):
+        last_n = Userid_NUserId.objects.all().order_by('userid').last()
+        print("last_n=",last_n)
+        if not last_n:
+            return 0
+        else:
+            return last_n.n_userid + 1
 
 class Artist_NArtist(models.Model):
     artist = models.CharField(max_length=300)

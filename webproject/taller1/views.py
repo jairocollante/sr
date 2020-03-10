@@ -14,8 +14,8 @@ from taller1.models import Userid_Profile, Userid_Timestamp, Userid_NUserId
 
 from taller1.algoritmos import IndiceJaccard, SimilitudCoseno, CorrelacionPearson
 
-class T1ModeloUserUser(View):
-    template_name='taller1/modeloUsuario.html'
+class T1ModeloUserUserJ(View):
+    template_name='taller1/modeloUsuarioJ.html'
     
     def get(self, request, *args, **kwargs):        
         userid = request.session.get('usuario_activo')
@@ -26,22 +26,59 @@ class T1ModeloUserUser(View):
             
             userCode = userCode[0].n_userid
             print("userid=",userid, " userCode=", userCode)
+			
+            lista_similares_jaccard={}
             lista_similares_jaccard =  IndiceJaccard.listaUsuariosSimilares(self,userCode)
             
             return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard})
-           
-           
-           # lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile,perfiles)
+			
+        else:
+            return redirect('t1_login')
+			
+class T1ModeloUserUserC(View):
+    template_name='taller1/modeloUsuarioC.html'
+    
+    def get(self, request, *args, **kwargs):        
+        userid = request.session.get('usuario_activo')
+        if userid:
+            userProfile = Userid_Profile.objects.get(pk=userid)
             
-           # lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
+            userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
+            
+            userCode = userCode[0].n_userid
+            print("userid=",userid, " userCode=", userCode)            
+           
+            lista_similares_cosine={}
+               
+            #lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
         
-           # return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine,'lista_similares_pearson':lista_similares_pearson})
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_cosine':lista_similares_cosine})
         else:
             return redirect('t1_login')
     
-	
-class T1ModeloItemItem(View):
-    template_name='taller1/modeloItem.html'
+class T1ModeloUserUserP(View):
+    template_name='taller1/modeloUsuarioP.html'
+    
+    def get(self, request, *args, **kwargs):        
+        userid = request.session.get('usuario_activo')
+        if userid:
+            userProfile = Userid_Profile.objects.get(pk=userid)
+            
+            userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
+            
+            userCode = userCode[0].n_userid
+            print("userid=",userid, " userCode=", userCode)
+            
+            lista_similares_pearson={}
+           # lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
+        
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_pearson':lista_similares_pearson})
+        else:
+            return redirect('t1_login')
+
+			
+class T1ModeloItemItemJ(View):
+    template_name='taller1/modeloItemJ.html'
     def get(self, request, *args, **kwargs):        
         userid = request.session.get('usuario_activo')
         if userid:
@@ -53,20 +90,52 @@ class T1ModeloItemItem(View):
             print("userid=",userid, " userCode=", userCode)
             
             lista_similares_jaccard={}
-            lista_similares_jaccard =  IndiceJaccard.listaItemsSimilares(self,userCode)
+            lista_similares_jaccard =  IndiceJaccard.listaItemsSimilares(self,userCode)            
             
-            lista_similares_cosine = SimilitudCoseno.listaItemsSimilares(self,userCode)
-            lista_similares_cosine=lista_similares_cosine.values.tolist();
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine})
-           # lista_similares_cosine = SimilitudCoseno.listaUsuariosSimilares(self,userProfile,perfiles)
-            
-           # lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
-        
-           # return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard,'lista_similares_cosine':lista_similares_cosine,'lista_similares_pearson':lista_similares_pearson})
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard})
+           
         else:
             return redirect('t1_login')
 
-    
+class T1ModeloItemItemC(View):
+    template_name='taller1/modeloItemC.html'
+    def get(self, request, *args, **kwargs):        
+        userid = request.session.get('usuario_activo')
+        if userid:
+            userProfile = Userid_Profile.objects.get(pk=userid)
+            
+            userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
+            
+            userCode = userCode[0].n_userid
+            print("userid=",userid, " userCode=", userCode)
+            
+            lista_similares_cosine={}			
+            lista_similares_cosine = SimilitudCoseno.listaItemsSimilares(self,userCode)
+            lista_similares_cosine=lista_similares_cosine.values.tolist();
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_cosine':lista_similares_cosine})
+           
+        else:
+            return redirect('t1_login')
+			
+
+class T1ModeloItemItemP(View):
+    template_name='taller1/modeloItemP.html'
+    def get(self, request, *args, **kwargs):        
+        userid = request.session.get('usuario_activo')
+        if userid:
+            userProfile = Userid_Profile.objects.get(pk=userid)
+            
+            userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
+            
+            userCode = userCode[0].n_userid
+            print("userid=",userid, " userCode=", userCode)
+            
+            lista_similares_pearson={}
+            
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_pearson':lista_similares_pearson})
+        else:
+            return redirect('t1_login')
+			
 class T1LoginView(FormView):
     template_name='taller1/login.html'
     form_class= T1LoginForm
@@ -139,8 +208,15 @@ class T1Userid_ProfileFormView(FormView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            nuevo = Userid_ProfileForm(request.POST)
+            nuevo = Userid_ProfileForm(request.POST)			
+            
             nuevo.save()
+            userNuser = Userid_NUserId()            
+            userNuser.userid = nuevo['userid'].value()
+            userNuser.n_userid = userNuser.incrementNumber()
+            print("userNuser=",userNuser)
+            userNuser.save()
+			
             return redirect('t1_login') 
         else:
             return render(request, self.template_name, {'form': form})
