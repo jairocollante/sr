@@ -9,10 +9,9 @@
 	</div>
 </div>        
 
-
 <div class="card card-outline-secondary my-4">
 	<div class="card-header">
-		Modelo basado en correlación de Pearson
+		Utilice un modelo basado en Correlación de Pearson
 	</div>
 	<div class="card-body">
 		<p>Perfil del usuario activo</p>
@@ -23,7 +22,7 @@
 		      <th scope="col">Genero</th>
 		      <th scope="col">Edad</th>
 		      <th scope="col">Pais</th>
-			  <th scope="col"></th>
+			  <th scope="col">Indice Jaccard</th>
 		    </tr>
 		  </thead>
 		  <tbody>		
@@ -37,34 +36,28 @@
 		  <tbody>
 		</table>
 		
-		<p>Perfiles similares al usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
+		<p>Recomendaciones de Artistas para el usuario activo. <small class="text-muted">Se muestran maximo 10 recomendaciones</small></p>
 		
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
-		      <th scope="col">User id</th>
-		      <th scope="col">Genero</th>
-		      <th scope="col">Edad</th>
-		      <th scope="col">Pais</th>
-			  <th scope="col">Correlacion Pearson</th>
+		      <th scope="col">No.</th>
+		      <th scope="col">Artista</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		
 			{% for i in lista_similares_pearson %} 
 			<tr> 
-				<th scope="row">{{i.userid_profile.userid}}</th>
-				<td>{% if i.userid_profile.gender %}  {{i.userid_profile.gender}}  {% endif %}</td>
-				<td>{{i.userid_profile.age}}</td>
-				<td>{{i.userid_profile.country}}</td>	
-				<td>{{i.pearson|floatformat:3}}</td>
+				<th scope="row">{{forloop.counter}}</th>
+				<td>{{i}}</td>
 			</tr>			
 			{% endfor %}
 		  <tbody>
 		</table>
 		
 		
-		<hr>           
+		<hr>        
 	</div>
 </div>
               

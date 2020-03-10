@@ -37,7 +37,7 @@
 		  <tbody>
 		</table>
 		
-		<p>Recomendaciones de artista para el usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
+		<p>Recomendaciones de Artistas para el usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
 		
 		<table class="table table-hover">
 		  <thead>
@@ -50,7 +50,7 @@
 		
 			{% for i in lista_similares_jaccard %} 
 			<tr> 
-				<th scope="row">{{i}}</th>
+				<th scope="row">{{forloop.counter}}</th>
 				<td>{{i}}</td>
 			</tr>			
 			{% endfor %}

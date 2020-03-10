@@ -95,3 +95,13 @@ class Pred_Coseno_II(models.Model):
 
     def __str__(self):
         return str(self.user_id + "-" + self.art_id)
+
+class Pred_Pearson_ii(models.Model):
+    user_id = models.IntegerField(null = False)
+    art_id = models.IntegerField(null = False)
+    r_ui = models.IntegerField(null = True)
+    est = models.IntegerField(null = False)
+    details = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.user_id + "-" + self.art_id)
