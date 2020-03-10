@@ -92,10 +92,11 @@ class T1ModeloItemItemJ(View):
             userCode = userCode[0].n_userid
             print("userid=",userid, " userCode=", userCode)
             
-            lista_similares_jaccard={}
-            lista_similares_jaccard =  IndiceJaccard.listaItemsSimilares(self,userCode)            
+            lista_similares_jaccard = {}
+            #lista_similares_jaccard = IndiceJaccardII.listaItemsSimilares(self, userCode)
+            lista_similares_jaccard = IndiceJaccardII.items_most_similar(self, userCode)
             
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard})
+            return render(request, self.template_name, {'usuario_activo':userProfile, 'lista_similares_jaccard':lista_similares_jaccard})
            
         else:
             return redirect('t1_login')

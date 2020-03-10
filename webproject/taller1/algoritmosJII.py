@@ -1,15 +1,43 @@
-from taller1.models import Userid_Profile, Userid_ProfileCalculado
-
 import pandas as  pd
 from collections import defaultdict
-import psycopg2
 import sqlalchemy
-from sqlalchemy import create_engine
-from django.db import connection
+from pickle import Unpickler
 
 class IndiceJaccardII():
-    
-    def listaUsuariosSimilares(self,usuario_activo):
+  usersPerItem = defaultdict(set)
+  itemsPerUser = defaultdict(set)
+  itemNames = {}
+  
+  # dic itemsPerUser key user-id , values lista artitas que escucha
+  # dic usersPerItem key arti-id , values lista de usuarios que escuchan
+  def conjunto_jaccard(self):
+    # Se cargan los conjuntos
+    pickled_file = open('jaccard_item_item.pickle', 'rb')
+    u = Unpickler(pickled_file)
+    itemsPerUser = u.load(); usersPerItem = u.load(); itemNames = u.load()
+    pickled_file.close()
+
+# Función para el cálculo del índice de Jaccard
+  def Jaccard(self, s1, s2):
+    number = len(s1.intersection(s2))
+    denom =  len(s1.union(s2))
+    return number/denom       
+
+# Función ítems similares
+# retorna los 10 items mas similares al item i en función a la similitud jaccard de los
+# usuarios que  han escuchado el item i
+  def mostSimilar_item(self, i, n):
+    similares = []
+    users = self.usersPerItem[i]
+    for i2 in usersPerItem:
+      if i2 is None:continue
+      if i2==i:continue
+      sim = Jaccard(users, usersPerItem[i2])
+      similares.append((sim, i2))
+    similares.sort(reverse = True)
+    return similares[:n]
+
+    def listaUsuariosSimilares(self, usuario_activo):
         
         cantidad = 10
         
@@ -65,14 +93,42 @@ class IndiceJaccardII():
                     limit 10000; ''', connection)
         return udata   
     
-        
-    def Jaccard(self,s1,s2):
-        number = len(s1.intersection(s2))
-        denom =  len(s1.union(s2))
-        return number/denom       
-        
+  # Función ítems que no ha consumido el usuario
+  # retorna los Items que No ha consumido un usuario de una lista de items
+  def items_no_in_usuario(self, items, items_u):
+    items_ok = []
+    for item in items:
+      if item[1] not in items_u:
+        items_ok.append(item)
+    return items_ok
+
+  # Retorna los Items que No ha consumido un usuario de una lista de items
+  def items_no_in_usuario_lista(self, items, items_u):
+    items_ok = []
+    for item in items:
+      if item not in items_u:
+        items_ok.append(item)
+    return items_ok
+
+  # Dado un usuario recomenida items que no ha consumido en función de la similitud jaccard a items
+  # que han consumido otros usuarios
+  def rs_user_item_jaccard(self, userid, n):
+    lista_items = self.itemsPerUser[userid]
+    items_similares =[]
+    for item in lista_items:
+      items_similares = items_similares + (self.mostSimilar_item(item, n))
+  
+    items_similares = self.items_no_in_usuario(items_similares, lista_items)
+    items_similares.sort(reverse=True)
+
+    return items_similares[:n]  
+
+  def items_most_similar(self, userid, n=10):
+    return [itemNames[i[1]] for i in self.rs_user_item_jaccard(userid, n)]
+
+'''        
     # retorna los 10 items mas similares al item i en funcion a la similitud jaccard de los usurios que  han escuchado el item i
-    def mostSimilar_item(self,i,usersPerItem,n):
+    def mostSimilar_itemx(self,i,usersPerItem,n):
         similares=[]
         users =  usersPerItem[i]
         for i2 in  usersPerItem:
@@ -82,16 +138,6 @@ class IndiceJaccardII():
         similares.sort(reverse=True)
         return similares[:n]
     
-    # dado un usuario retorna los 10 usuarios mas similares al usuario i en funcion a la similitud jaccard de los items que estos usuarios consumieron
-    def mostSimilar_usuario(self,i,itemsPerUser,n):
-        similares=[]
-        items =  itemsPerUser[i]
-        for u2 in  itemsPerUser:
-            if u2==i:continue
-            sim = IndiceJaccardII.Jaccard(self,items,  itemsPerUser[u2])
-            similares.append((sim,u2))
-        similares.sort(key=lambda t: t[0],reverse= True)
-        return similares[:n]
     
     #retorna los Items que No ha consumido un usuario de una lista de items
     def items_no_in_usuario(self,items,items_u):
@@ -143,3 +189,4 @@ class IndiceJaccardII():
             lista_resultante.append(itemNames[i])
             
         return lista_resultante
+'''
