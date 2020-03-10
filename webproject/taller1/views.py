@@ -12,7 +12,10 @@ from django.core.paginator import Paginator
 
 from taller1.models import Userid_Profile, Userid_Timestamp, Userid_NUserId
 
-from taller1.algoritmos import IndiceJaccard, SimilitudCoseno, CorrelacionPearson
+from taller1.algoritmosJ import IndiceJaccard
+from taller1.algoritmosC import SimilitudCoseno
+from taller1.algoritmosP import CorrelacionPearson
+from taller1.algoritmosJII import IndiceJaccardII
 
 class T1ModeloUserUserJ(View):
     template_name='taller1/modeloUsuarioJ.html'
