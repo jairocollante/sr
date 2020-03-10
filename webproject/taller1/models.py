@@ -99,8 +99,8 @@ class Pred_Coseno_II(models.Model):
 class Pred_Pearson_ii(models.Model):
     user_id = models.IntegerField(null = False)
     art_id = models.IntegerField(null = False)
-    r_ui = models.IntegerField(null = True)
-    est = models.IntegerField(null = False)
+    r_ui = models.FloatField(null = True)
+    est = models.FloatField(null = False)
     details = models.CharField(max_length=100)
 
     def __str__(self):

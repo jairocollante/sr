@@ -7,7 +7,7 @@ class IndiceJaccardII():
   usersPerItem = defaultdict(set)
   itemsPerUser = defaultdict(set)
   itemNames = {}
-  def __init__(self, Name="there"):
+  def __init__(self):
     # Se cargan los conjuntos
     pickled_file = open('jaccard_item_item.pickle', 'rb')
     u = Unpickler(pickled_file)

@@ -12,10 +12,12 @@ from django.core.paginator import Paginator
 
 from taller1.models import Userid_Profile, Userid_Timestamp, Userid_NUserId
 
-from taller1.algoritmosJ import IndiceJaccard
+from taller1.algoritmosJUU import IndiceJaccardUU
 from taller1.algoritmosC import SimilitudCoseno
 from taller1.algoritmosP import CorrelacionPearson
 from taller1.algoritmosJII import IndiceJaccardII
+from taller1.algoritmosCII import SimilitudCosenoII
+from taller1.algoritmosPII import CorrelacionPearsonII
 
 class T1ModeloUserUserJ(View):
     template_name='taller1/modeloUsuarioJ.html'
@@ -23,17 +25,20 @@ class T1ModeloUserUserJ(View):
     def get(self, request, *args, **kwargs):        
         userid = request.session.get('usuario_activo')
         if userid:
+            ij = IndiceJaccardII()
             userProfile = Userid_Profile.objects.get(pk=userid)
             
-            userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
+            #userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
             
-            userCode = userCode[0].n_userid
-            print("userid=",userid, " userCode=", userCode)
+            #userCode = userCode[0].n_userid
+            #print("userid=",userid, " userCode=", userCode)
+            print("userid=", userid)
 			
             lista_similares_jaccard={}
-            lista_similares_jaccard =  IndiceJaccard.listaUsuariosSimilares(self,userCode)
+            #lista_similares_jaccard =  IndiceJaccardUU.listaUsuariosSimilares(self, userid)
+            lista_similares_jaccard = ij.items_most_similar(userid)
             
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_jaccard':lista_similares_jaccard})
+            return render(request, self.template_name, {'usuario_activo':userProfile, 'lista_similares_jaccard':lista_similares_jaccard})
 			
         else:
             return redirect('t1_login')
@@ -78,14 +83,13 @@ class T1ModeloUserUserP(View):
             return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_pearson':lista_similares_pearson})
         else:
             return redirect('t1_login')
-
 			
 class T1ModeloItemItemJ(View):
     template_name='taller1/modeloItemJ.html'
     def get(self, request, *args, **kwargs):        
         userid = request.session.get('usuario_activo')
         if userid:
-            ij = IndiceJaccardII()
+            ij = IndiceJaccardUU()
             userProfile = Userid_Profile.objects.get(pk=userid)
             
             #userCode = list(Userid_NUserId.objects.filter(userid__in=[userid]))
@@ -115,7 +119,7 @@ class T1ModeloItemItemC(View):
             print("userid=",userid, " userCode=", userCode)
             
             lista_similares_cosine={}			
-            lista_similares_cosine = SimilitudCoseno.listaItemsSimilares(self,userCode)
+            lista_similares_cosine = SimilitudCoseno.listaItemsSimilares(self, userCode)
             lista_similares_cosine=lista_similares_cosine.values.tolist();
             return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_cosine':lista_similares_cosine})
            
