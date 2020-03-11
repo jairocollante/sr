@@ -19,6 +19,8 @@ from taller1.algoritmosJII import IndiceJaccardII
 from taller1.algoritmosCII import SimilitudCosenoII
 from taller1.algoritmosPII import CorrelacionPearsonII
 
+from taller1.algoritmoCoseno import Coseno
+
 class T1ModeloUserUserJ(View):
     template_name='taller1/modeloUsuarioJ.html'
     
@@ -58,11 +60,17 @@ class T1ModeloUserUserC(View):
            
             lista_similares_cosine={}
                
-            #lista_similares_pearson = CorrelacionPearson.listaUsuariosSimilares(self,userProfile,perfiles)
-        
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_cosine':lista_similares_cosine})
+            resp = Coseno.recomendacionUsuario(self,userid)
+            print(resp)
+            lista_similares_cosine=resp['lista_coseno_usuario']
+            lista_recomendacion=resp['lista_recomendacion']            
+            print(lista_similares_cosine)
+            print(lista_recomendacion)
+            
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_recomendacion':lista_recomendacion,'lista_similares_cosine':lista_similares_cosine})
         else:
             return redirect('t1_login')
+        
     
 class T1ModeloUserUserP(View):
     template_name='taller1/modeloUsuarioP.html'
@@ -108,6 +116,7 @@ class T1ModeloItemItemJ(View):
 
 class T1ModeloItemItemC(View):
     template_name='taller1/modeloItemC.html'
+    
     def get(self, request, *args, **kwargs):        
         userid = request.session.get('usuario_activo')
         if userid:
@@ -118,10 +127,16 @@ class T1ModeloItemItemC(View):
             userCode = userCode[0].n_userid
             print("userid=",userid, " userCode=", userCode)
             
-            lista_similares_cosine={}			
-            lista_similares_cosine = SimilitudCoseno.listaItemsSimilares(self, userCode)
-            lista_similares_cosine=lista_similares_cosine.values.tolist();
-            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_similares_cosine':lista_similares_cosine})
+            lista_similares_cosine={}
+               
+            resp = Coseno.recomendacionItem(self,userid)
+            print(resp)
+            lista_similares_cosine=resp['lista_coseno_artista']
+            lista_artista=resp['artista_activo']            
+            print(lista_similares_cosine)
+            print(lista_artista)
+            
+            return render(request, self.template_name, {'usuario_activo':userProfile,'lista_artista':lista_artista,'lista_similares_cosine':lista_similares_cosine})
            
         else:
             return redirect('t1_login')

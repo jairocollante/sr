@@ -105,3 +105,9 @@ class Pred_Pearson_ii(models.Model):
 
     def __str__(self):
         return str(self.user_id + "-" + self.art_id)
+
+class Userid_Artist_Count(models.Model):
+    userid = models.CharField(max_length=20)
+    artist = models.CharField(max_length=300)
+    count = models.IntegerField()
+    

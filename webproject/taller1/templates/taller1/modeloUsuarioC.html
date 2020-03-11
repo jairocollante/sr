@@ -5,7 +5,7 @@
 	
 <div class="card mt-4">          
 	<div class="card-body">
-		<h3 class="card-title">Modelo Usuario - Usuario. Similaridad Coseno</h3>		
+		<h3 class="card-title">Modelo Usuario - Usuario</h3>		
 	</div>
 </div>        
 
@@ -38,32 +38,45 @@
 		  <tbody>
 		</table>
 		
-		<p>Perfiles similares al usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
+		<p>Perfiles más similares al usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
 		
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
 		      <th scope="col">User id</th>
-		      <th scope="col">Genero</th>
-		      <th scope="col">Edad</th>
-		      <th scope="col">Pais</th>
-			  <th scope="col">Similaridad Coseno</th>
+			  <th scope="col">Indice Coseno</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		
 			{% for i in lista_similares_cosine %} 
 			<tr> 
-				<th scope="row">{{i.userid_profile.userid}}</th>
-				<td>{% if i.userid_profile.gender %}  {{i.userid_profile.gender}}  {% endif %}</td>
-				<td>{{i.userid_profile.age}}</td>
-				<td>{{i.userid_profile.country}}</td>	
-				<td>{{i.cosine|floatformat:3}}</td>
+				<th scope="row">{{i.usuario_similar}}</th>				
+				<td>{{i.coseno}}</td>	
 			</tr>			
 			{% endfor %}
 		  <tbody>
 		</table>
 		
+		<p>Recomendación basada en los Artitas que más le gustan al Usuario más similar. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
+		
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+			  <th scope="col">Artista</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in lista_recomendacion %} 
+			<tr> 
+				<th scope="row">{{forloop.counter}}</th>				
+				<td>{{i}}</td>	
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
 		
 		<hr>           
 	</div>

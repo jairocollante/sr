@@ -5,17 +5,17 @@
 	
 <div class="card mt-4">          
 	<div class="card-body">
-		<h3 class="card-title">Modelo Item - Item. Indice Coseno</h3>	
+		<h3 class="card-title">Modelo Item - Item. Similutud Coseno</h3>
 	</div>
 </div>        
 
 	
 <div class="card card-outline-secondary my-4">
 	<div class="card-header">
-		Utilice un modelo basado en Indice coseno
+		Utilice un modelo basado en distancias coseno
 	</div>
 	<div class="card-body">
-		<p>Utilice un modelo basado en Indice coseno.</p>
+		<p>Utilice un modelo basado en distancias coseno.</p>
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
@@ -37,7 +37,7 @@
 		  <tbody>
 		</table>
 		
-		<p>Recomendaciones de Items para el usuario activo. <small class="text-muted">Se muestran maximo 10 recomendaciones</small></p>
+		<p>Los artitas más escuchado por el usuario activo. <small class="text-muted">Se muestran maximo 10</small></p>
 		
 		<table class="table table-hover">
 		  <thead>
@@ -48,15 +48,34 @@
 		  </thead>
 		  <tbody>
 		
-			{% for i in lista_similares_cosine %} 
+			{% for a in lista_artista %} 
 			<tr> 
-				<th scope="row">{{i.0}}</th>
-				<td>{{i.0}}</td>
+				<th scope="row">{{forloop.counter}}</th>
+				<td>{{a}}</td>
 			</tr>			
 			{% endfor %}
 		  <tbody>
 		</table>
 		
+		<p>Artistas más similares al artista favorito del usuario activo. <small class="text-muted">Se muestran maximo 10 perfiles</small></p>
+		
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">Artista</th>
+			  <th scope="col">Indice Coseno</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in lista_similares_cosine %} 
+			<tr> 
+				<th scope="row">{{i.artista_similar}}</th>				
+				<td>{% for c in i.coseno %} {{c}} {% endfor %}</td>	
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
 		
 		<hr>           
 	</div>
