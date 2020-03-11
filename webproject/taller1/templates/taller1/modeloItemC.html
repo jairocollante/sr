@@ -71,7 +71,7 @@
 			{% for i in lista_similares_cosine %} 
 			<tr> 
 				<th scope="row">{{i.artista_similar}}</th>				
-				<td>{% for c in i.coseno %} {{c}} {% endfor %}</td>	
+				<td>{% for c in i.coseno %} {{c|floatformat:4}} {% endfor %}</td>	
 			</tr>			
 			{% endfor %}
 		  <tbody>
