@@ -111,3 +111,11 @@ class Userid_Timestamp_Count(models.Model):
     artist = models.CharField(max_length=300)
     count = models.IntegerField()
     
+    def incrementNumber(self, userid, artist):
+        last_n = Userid_Timestamp_Count.objects.filter(userid = userid, artist = artist).last()
+        print("last_n=",last_n)
+        if not last_n:
+            return 0 
+        else:
+            return last_n.count + 1
+    

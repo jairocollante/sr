@@ -10,7 +10,7 @@ from django.views import View
 
 from django.core.paginator import Paginator
 
-from taller1.models import Userid_Profile, Userid_Timestamp, Userid_NUserId
+from taller1.models import Userid_Profile, Userid_Timestamp, Userid_NUserId, Userid_Timestamp_Count
 
 from taller1.algoritmosJUU import IndiceJaccardUU
 from taller1.algoritmosC import SimilitudCoseno
@@ -263,6 +263,24 @@ class T1Userid_TimestampFormView(FormView):
         if form.is_valid():
             nuevo = Userid_TimestampForm(request.POST)
             nuevo.save()
+            
+            userid = nuevo['userid_Profile'].value()
+            artist = nuevo['artist'].value()
+        
+            userid_Timestamp_Count = Userid_Timestamp_Count()
+            userid_Timestamp_Count.userid = userid
+            userid_Timestamp_Count.artist = artist 
+            #userid_Timestamp_Count.count= userid_Timestamp_Count.incrementNumber(userid,artist)
+            u = list(Userid_Timestamp_Count.objects.filter(userid = userid, artist = artist))
+            if not u:
+                userid_Timestamp_Count.count=1  
+                userid_Timestamp_Count.save()              
+            else:
+                u1 = u[0]
+                u1.count = u1.count+1 
+                u1.save()               
+                   
+                
             return redirect('t1_login')
         else:
             return render(request, self.template_name, {'form': form})
