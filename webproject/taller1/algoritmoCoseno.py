@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from taller1.models import Userid_Timestamp_Count
 
 class Coseno():
 	def recomendacionUsuario(self,usuario_activo):
@@ -21,7 +22,8 @@ class Coseno():
 		return resp
 
 	def cargarDatos(self):
-		df_mapreduce = pd.read_csv('part-r-00000',sep='\t',names=['userid','artist','count'])
+		#df_mapreduce = pd.read_csv('part-r-00000',sep='\t',names=['userid','artist','count'])
+		df_mapreduce = pd.DataFrame(list(Userid_Timestamp_Count.objects.all().values('userid','artist','count')))
 		return df_mapreduce.dropna()
 		
 	def iterarUsuario(self,df_pivot,usuario_activo):

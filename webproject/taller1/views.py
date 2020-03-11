@@ -203,9 +203,9 @@ class T1PerfilView(View):
         userid = request.session.get('usuario_activo')
         if userid:
             userProfile = Userid_Profile.objects.get(pk=userid)
-            iteracciones_list = Userid_Timestamp.objects.filter(userid_Profile=userProfile)
+            iteracciones_list = Userid_Timestamp.objects.filter(userid_Profile=userProfile)[:100]
             print("iteracciones_list=",iteracciones_list.count())
-            paginator = Paginator(list(iteracciones_list), 50)
+            paginator = Paginator(list(iteracciones_list), 20)
             page_number = request.GET.get('page')
             iteracciones = paginator.get_page(page_number)
             return render(request,'taller1/perfil.html',{'usuario':userProfile,'page_obj':iteracciones})
