@@ -2,6 +2,8 @@ import pandas as  pd
 from collections import defaultdict
 import sqlalchemy
 from pickle import Unpickler
+from django.conf import settings
+
 
 class IndiceJaccardII():
   usersPerItem = defaultdict(set)
@@ -9,7 +11,7 @@ class IndiceJaccardII():
   itemNames = {}
   def __init__(self):
     # Se cargan los conjuntos
-    pickled_file = open('jaccard_item_item.pickle', 'rb')
+    pickled_file = open(settings.BASE_DIR+'/jaccard_item_item.pickle', 'rb')
     u = Unpickler(pickled_file)
     self.itemsPerUser = u.load(); self.usersPerItem = u.load(); self.itemNames = u.load()
     pickled_file.close()
