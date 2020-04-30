@@ -133,3 +133,4 @@ dmypy.json
 #Eclipse
 /org.eclipse.ltk.core.refactoring.prefs
 
+.vscode/settings.json
