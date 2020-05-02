@@ -22,20 +22,20 @@
 			<table class="table table-hover">
 		  <thead>
 		    <tr>
-		      <th scope="col">User id</th>
-		      <th scope="col">Código Usuario</th>
-		      <th scope="col">Artista</th>
-		      <th scope="col">Código Artista</th>
-		      <th scope="col">Disco</th>
+		      <th scope="col">Review id</th>
+		      <th scope="col">Business id</th>
+		      <th scope="col">Business name</th>
+		      <th scope="col">Estrellas</th>
+		      <th scope="col">Fecha</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		
 			{% for i in page_obj %} 
 			<tr> 
-				<th scope="row">{{i.userid_Profile.user_id}}</th>
-				<td>{{i.review_id}}</td>
-				<td>{{i.business_id}}</td>
+				<th scope="row">{{i.review_id}}</td>
+				<td>{{i.business.business_id}}</td>
+				<td>{{i.business.name}}</td>
 				<td>{{i.stars}}</td>
 				<td>{{i.date}}</td>			
 			</tr>			

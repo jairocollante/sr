@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context
 from django.views.generic.base import TemplateView
@@ -38,11 +39,15 @@ class T2LoginView(FormView):
             userProfile = usuario[0]
             print("userProfile=", userProfile)
             
-            request.session['usuario_activo']=userProfile.user_id
+            request.session['usuario_activo'] = userProfile.user_id
 
-            interacciones = Review.objects.filter(user_id=userProfile)
-            print("interacciones=",interacciones.count())
-            return render(request,'taller2/perfil.html',{'usuario':userProfile, 'interacciones':interacciones})
+            interacciones_list = Review.objects.filter(user_id=userProfile)[:100]
+            print("interacciones_list=", interacciones_list.count())
+            paginator = Paginator(list(interacciones_list), 20)
+            page_number = request.GET.get('page')
+            interacciones = paginator.get_page(page_number)
+            print("interacciones=",interacciones_list.count())
+            return render(request,'taller2/perfil.html',{'usuario':userProfile, 'page_obj':interacciones})
     
     def form_valid(self, form):
         form.doLogin()
@@ -59,16 +64,16 @@ class T2PerfilView(View):
     def get(self, request, *args, **kwargs):
         userid = request.session.get('usuario_activo')
         if userid:
-            userProfile = Userid_Profile.objects.get(pk=userid)
-            iteracciones_list = Userid_Timestamp.objects.filter(userid_Profile=userProfile)[:100]
-            print("iteracciones_list=",iteracciones_list.count())
-            paginator = Paginator(list(iteracciones_list), 20)
+            userProfile = User.objects.get(pk=userid)
+            interacciones_list = Review.objects.filter(user_id=userProfile)[:100]
+            print("interacciones_list=", interacciones_list.count())
+            paginator = Paginator(list(interacciones_list), 20)
             page_number = request.GET.get('page')
-            iteracciones = paginator.get_page(page_number)
-            return render(request,'taller1/perfil.html',{'usuario':userProfile,'page_obj':iteracciones})
+            interacciones = paginator.get_page(page_number)
+            return render(request,'taller2/perfil.html',{'usuario':userProfile, 'page_obj':interacciones})
         else:
-            return redirect('t1_login')
+            return redirect('t2_login')
 
-class T1Userid_ProfileList(ListView):
+class T2ListaUsuarios(ListView):
     model = User
     paginate_by = 100

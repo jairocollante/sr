@@ -28,10 +28,31 @@ class User(models.Model):
     def __str__(self):
         return str(self.user_id)
 
+class Business(models.Model):
+    business_id = models.CharField(primary_key=True, max_length=30)
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=400)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=10)
+    postal_code = models.CharField(max_length=20)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    stars = models.FloatField()
+    review_count = models.IntegerField()
+    is_open = models.IntegerField()
+    attributes = models.CharField(max_length=4000)
+    categories = models.CharField(max_length=4000)
+    hours = models.CharField(max_length=200)
+
+    def __str__(self):
+        return str(self.business_id)
+
+
 class Review(models.Model):
     review_id = models.CharField(primary_key=True, max_length=30)
     user_id = models.CharField(null=False, max_length=30)
-    business_id = models.CharField(null=False, max_length=30)
+#    business_id = models.CharField(null=False, max_length=30)
+    business = models.ForeignKey('Business', on_delete=models.CASCADE)
     stars = models.IntegerField(null=True)
     useful = models.IntegerField(null=True)
     funny = models.IntegerField(null=True)
