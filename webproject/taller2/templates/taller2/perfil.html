@@ -1,0 +1,70 @@
+{% extends "taller2/template.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="card mt-4">          
+	<div class="card-body">
+		<h3 class="card-title">Perfil del usuario " {{usuario.user_id}} "</h3>		
+		<p class="card-text">Nombre: {{usuario.name}}</p>	
+		<p>Revisiones: {{usuario.review_count}}</p>
+		<p>Yelping desde: {{usuario.yelping_since}}</p>
+		<p>Estrellas promedio: {{usuario.average_stars}}</p>
+	</div>
+</div>
+
+<div class="card card-outline-secondary my-4">
+	<div class="card-header">
+		Iteracción del Usuario   {{usuario_activo}}
+	</div>
+	<div class="card-body">
+	
+			<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Código Usuario</th>
+		      <th scope="col">Artista</th>
+		      <th scope="col">Código Artista</th>
+		      <th scope="col">Disco</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		
+			{% for i in page_obj %} 
+			<tr> 
+				<th scope="row">{{i.userid_Profile.user_id}}</th>
+				<td>{{i.review_id}}</td>
+				<td>{{i.business_id}}</td>
+				<td>{{i.stars}}</td>
+				<td>{{i.date}}</td>			
+			</tr>			
+			{% endfor %}
+		  <tbody>
+		</table>
+	
+	
+		<div class="pagination">
+		    <span class="step-links">
+		        {% if page_obj.has_previous %}
+		            <a href="?page=1">&laquo; first</a>
+		            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+		        {% endif %}
+		
+		        <span class="current">
+		            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+		        </span>
+		
+		        {% if page_obj.has_next %}
+		            <a href="?page={{ page_obj.next_page_number }}">next</a>
+		            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+		        {% endif %}
+		    </span>
+		</div>
+		
+
+		<hr>           
+	</div>
+</div>
+
+{% endblock contenido %}

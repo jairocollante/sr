@@ -1,0 +1,20 @@
+{% extends "taller2/template.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="card card-outline-secondary my-4">
+	<div class="card-header">
+		Usuarios Existentes
+	</div>
+	<div class="card-body">
+		<ul>
+			{% for u in object_list %}
+			<li>{{ u.userid }}</li>
+			{% endfor %}
+		</ul>
+		<hr>           
+	</div>
+</div>
+
+{% endblock contenido %}

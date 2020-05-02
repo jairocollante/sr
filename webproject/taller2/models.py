@@ -27,3 +27,17 @@ class User(models.Model):
    
     def __str__(self):
         return str(self.user_id)
+
+class Review(models.Model):
+    review_id = models.CharField(primary_key=True, max_length=30)
+    user_id = models.CharField(null=False, max_length=30)
+    business_id = models.CharField(null=False, max_length=30)
+    stars = models.IntegerField(null=True)
+    useful = models.IntegerField(null=True)
+    funny = models.IntegerField(null=True)
+    cool = models.IntegerField(null=True)
+    text = models.CharField(max_length=10000)
+    date = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.review_id)
