@@ -19,7 +19,7 @@ class T2Hibrido(View):
             print("userid=", userid)
             userProfile = User.objects.get(user_id=userid)
             resp = carga_ini_v2_ok.best_n_hybrid_recomendations(userid,4,3)
-            return render(request,'template_name',{'usuario_activo':userProfile, 'resp':resp})
+            return render(request,self.template_name,{'usuario_activo':userProfile, 'resp':resp})
         else:
             return redirect('t2_login')
 
