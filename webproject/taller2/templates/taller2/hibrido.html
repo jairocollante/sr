@@ -1,0 +1,47 @@
+{% extends "taller1/template.html" %}
+{% load static %}
+
+{% block contenido %}
+	
+<div class="card mt-4">          
+	<div class="card-body">
+		<h3 class="card-title">Modelo Hibrido</h3>
+	</div>
+</div>        
+
+	
+<div class="card card-outline-secondary my-4">
+	<div class="card-header">
+		Utilice un modelo hibrido
+	</div>
+	<div class="card-body">
+		<p>Modelo Hibrido.</p>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		      <th scope="col">Genero</th>
+		      <th scope="col">Edad</th>
+		      <th scope="col">Pais</th>
+			  <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>		
+			<tr> 
+				<th scope="row">{{usuario_activo.userid}}</th>
+				<td>{{usuario_activo.gender}}</td>
+				<td>{{usuario_activo.age}}</td>
+				<td>{{usuario_activo.country}}</td>	
+				<td>1</td>
+			</tr>	
+		  <tbody>
+		</table>
+		
+		{{resp}}
+		
+		<hr>           
+	</div>
+</div>
+
+              
+ {% endblock contenido %}

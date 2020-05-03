@@ -9,13 +9,17 @@ from django.views import View
 
 from taller2.forms import T2LoginForm
 from taller2.models import User, Review
+from taller2 import carga_ini_v2_ok
 
 class T2Hibrido(View):
-    template_name='taller2/T2Hibrido.html'
+    template_name='taller2/hibrido.html'
     def get(self, request, *args, **kwargs):        
         userid = request.session.get('usuario_activo')
         if userid:
             print("userid=", userid)
+            userProfile = Userid_Profile.objects.get(pk=userid)
+            resp = carga_ini_v2_ok.best_n_hybrid_recomendations(userid,4,3)
+            return render(request,'template_name',{'usuario_activo':userProfile, 'resp':resp})
         else:
             return redirect('t2_login')
 
