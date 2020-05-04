@@ -1,4 +1,4 @@
-{% extends "taller1/template.html" %}
+{% extends "taller2/template.html" %}
 {% load static %}
 
 {% block contenido %}
@@ -20,25 +20,27 @@
 		  <thead>
 		    <tr>
 		      <th scope="col">User id</th>
-		      <th scope="col">Genero</th>
-		      <th scope="col">Edad</th>
-		      <th scope="col">Pais</th>
-			  <th scope="col"></th>
+		       
 		    </tr>
 		  </thead>
 		  <tbody>		
 			<tr> 
 				<th scope="row">{{usuario_activo.userid}}</th>
-				<td>{{usuario_activo.gender}}</td>
-				<td>{{usuario_activo.age}}</td>
-				<td>{{usuario_activo.country}}</td>	
-				<td>1</td>
+				
 			</tr>	
 		  <tbody>
 		</table>
 		
-		{{resp}}
 		
+		<div class="card-body">
+
+			<ul>
+				{{resp}}
+		
+			</ul>
+		</div>
+
+
 		<hr>           
 	</div>
 </div>
