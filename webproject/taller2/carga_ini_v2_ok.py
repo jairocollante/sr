@@ -249,7 +249,10 @@ def best_n_hybrid_recomendations(userid,n,k):
 
   #cargar business recomendados usuario activo userid
   bisness =business_df[business_df.business_id.isin(bisnes)]
-  
+  bisness =business_df[['business_id','name','state', 'city', 'address','stars','categories']]
+
+  print(bisness.shape)
+
   return bisness 
 
 def modelo_content_udata_n(userid,n):
