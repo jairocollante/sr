@@ -18,8 +18,9 @@ class T2Hibrido(View):
         if userid:
             print("userid=", userid)
             userProfile = User.objects.get(user_id=userid)
-            resp = carga_ini_v2_ok.best_n_hybrid_recomendations(userid,4,3)[:10].to_dict()
-            return render(request,self.template_name,{'usuario_activo':userProfile, 'resp':resp})
+            resp = carga_ini_v2_ok.best_n_hybrid_recomendations(userid,4,3)
+            json = resp.to_json(orient='records') 
+            return render(request,self.template_name,{'usuario_activo':userProfile, 'resp':json})
         else:
             return redirect('t2_login')
 

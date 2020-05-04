@@ -40,6 +40,30 @@
 			</ul>
 		</div>
 
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Review id</th>
+					<th scope="col">Business id</th>
+					<th scope="col">Business name</th>
+					<th scope="col">Estrellas</th>
+					<th scope="col">Fecha</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for i in resp %}
+				<tr>
+					<th scope="row">{{i.business_id}}</td>
+					<td>{{i.name}}</td>
+					<td>{{i.sate}}</td>
+					<td>{{i.city}}</td>
+					<td>{{i.address}}</td>
+					<td>{{i.stars}}</td>
+					<td>{{i.categories}}</td>
+				</tr>
+				{% endfor %}
+			<tbody>
+		</table>
 
 		<hr>           
 	</div>
