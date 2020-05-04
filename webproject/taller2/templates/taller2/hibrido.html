@@ -31,23 +31,16 @@
 		  <tbody>
 		</table>
 		
-		
-		<div class="card-body">
-
-			<ul>
-				{{resp}}
-		
-			</ul>
-		</div>
-
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th scope="col">Review id</th>
 					<th scope="col">Business id</th>
 					<th scope="col">Business name</th>
+					<th scope="col">State</th>
+					<th scope="col">City</th>
+					<th scope="col">Address</th>
 					<th scope="col">Estrellas</th>
-					<th scope="col">Fecha</th>
+					<th scope="col">Categorias</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -55,7 +48,7 @@
 				<tr>
 					<th scope="row">{{i.business_id}}</td>
 					<td>{{i.name}}</td>
-					<td>{{i.sate}}</td>
+					<td>{{i.state}}</td>
 					<td>{{i.city}}</td>
 					<td>{{i.address}}</td>
 					<td>{{i.stars}}</td>
