@@ -23,22 +23,23 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="{% url 't1_index' %}">Universidad de los Andes - Sistema de Recomendación - MINE4201</a>
+      <a class="navbar-brand" href="{% url 't2_index' %}">Universidad de los Andes - Sistema de Recomendación - MINE4201</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 't1_index' %}">Taller 1
-              <span class="sr-only">(current)</span>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 't1_index' %}">Taller 1        
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 't2_index' %}">Taller 2</a>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 't2_index'%}">Taller 2
+            <span class="sr-only">(current)</span>
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 't3_index' %}">Taller 3</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 't3_index'%}">Taller 3</a>
           </li> 
 		  <li class="nav-item">
             <a class="nav-link" href="#">{{ request.session.usuario_activo }}</a>
@@ -56,20 +57,11 @@
       <div class="col-lg-3">
         <h1 class="my-4">Actividades</h1>
         <div class="list-group">
-          <a href="{% url 't1_login' %}" class="list-group-item">Login</a>
-		  <a href="{% url 't1_perfil' %}" class="list-group-item">Usuario Activo</a>
-		  <a href="{% url 't1_modeloUU_J' %}" class="list-group-item">Mod. Jaccard Usuario-Usuario </a>
-		  <a href="{% url 't1_modeloUU_C' %}" class="list-group-item">Mod. Coseno Usuario-Usuario </a>
-		  <a href="{% url 't1_modeloUU_P' %}" class="list-group-item">Mod. Pearson Usuario-Usuario </a>
-		  <a href="{% url 't1_modeloII_J' %}" class="list-group-item">Mod. Jaccard Item-Item </a>
-		  <a href="{% url 't1_modeloII_C' %}" class="list-group-item">Mod. Coseno Item-Item </a>
-		  <a href="{% url 't1_modeloII_P' %}" class="list-group-item">Mod. Pearson Item-Item </a>
-		  <a href="{% url 't1_nuevoP' %}" class="list-group-item">Nuevo Usuario</a>
-		  <a href="{% url 't1_nuevoT' %}" class="list-group-item">Nueva Iteracción</a>
-          <a href="{% url 't1_listaUsuarios' %}" class="list-group-item">Lista de usuarios</a>
-          
+          <a href="" class="list-group-item">Login</a>
+          <a href="" class="list-group-item">A</a>
+          <a href="" class="list-group-item">B</a>
+          <a href="" class="list-group-item">C</a>          
         </div>
-		<h4 class="my-4">{{ request.session.usuario_activo }}</h4>
       </div>
       <!-- /.col-lg-3 -->
 	  <div class="col-lg-9">
