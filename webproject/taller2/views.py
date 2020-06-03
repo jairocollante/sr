@@ -9,7 +9,7 @@ from django.views import View
 
 from taller2.forms import T2LoginForm
 from taller2.models import User, Review
-from taller2 import carga_ini_v2_ok
+#from taller2 import carga_ini_v2_ok
 import json
 
 class T2Hibrido(View):
@@ -19,9 +19,9 @@ class T2Hibrido(View):
         if userid:
             print("userid=", userid)
             userProfile = User.objects.get(user_id=userid)
-            resp = carga_ini_v2_ok.best_n_hybrid_recomendations(userid, 10, 10)
-            mijson = resp.to_json(orient='records')
-            respjson = json.loads(mijson) 
+            #resp = carga_ini_v2_ok.best_n_hybrid_recomendations(userid, 10, 10)
+            #mijson = resp.to_json(orient='records')
+            #respjson = json.loads(mijson) 
             return render(request,self.template_name,{'usuario_activo':userProfile, 'resp':respjson})
         else:
             return redirect('t2_login')

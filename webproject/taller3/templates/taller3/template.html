@@ -57,12 +57,12 @@
       <div class="col-lg-3">
         <h1 class="my-4">Actividades</h1>
         <div class="list-group">
-          <a href="" class="list-group-item">Login</a>
-          <a href="" class="list-group-item">A</a>
-          <a href="" class="list-group-item">B</a>
-          <a href="" class="list-group-item">C</a>          
+          <a href="{% url 't3_login' %}" class="list-group-item">Login</a>
+          <a href="{% url 't3_sistema' %}" class="list-group-item">Recomendación</a>
+           <h3 class="my-4"> Usuario activo = {{ request.session.usuario_activo }}</h3>
         </div>
       </div>
+      
       <!-- /.col-lg-3 -->
 	  <div class="col-lg-9">
       {% block contenido %}

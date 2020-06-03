@@ -1,0 +1,66 @@
+{% extends "taller3/template.html" %}
+{% load static %}
+
+{% block contenido %}
+	
+<div class="card mt-4">          
+	<div class="card-body">
+		<h3 class="card-title">Modelo </h3>
+	</div>
+</div>        
+
+	
+<div class="card card-outline-secondary my-4">
+	<div class="card-header">
+		Utilice un modelo
+	</div>
+	<div class="card-body">
+		<p>Modelo .</p>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		       
+		    </tr>
+		  </thead>
+		  <tbody>		
+			<tr> 
+				<th scope="row">{{usuario_activo.userid}}</th>
+				
+			</tr>	
+		  <tbody>
+		</table>
+		
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Business id</th>
+					<th scope="col">Business name</th>
+					<th scope="col">State</th>
+					<th scope="col">City</th>
+					<th scope="col">Address</th>
+					<th scope="col">Estrellas</th>
+					<th scope="col">Categorias</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for i in resp %}
+				<tr>
+					<th scope="row">{{i.business_id}}</td>
+					<td>{{i.name}}</td>
+					<td>{{i.state}}</td>
+					<td>{{i.city}}</td>
+					<td>{{i.address}}</td>
+					<td>{{i.stars}}</td>
+					<td>{{i.categories}}</td>
+				</tr>
+				{% endfor %}
+			<tbody>
+		</table>
+
+		<hr>           
+	</div>
+</div>
+
+              
+ {% endblock contenido %}
