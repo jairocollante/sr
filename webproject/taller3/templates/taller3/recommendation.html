@@ -15,7 +15,7 @@
 		Utilice un modelo
 	</div>
 	<div class="card-body">
-		<p>Modelo .</p>
+		<p>Modelo {{usuario_activo}}.</p>
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
@@ -34,25 +34,15 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th scope="col">Business id</th>
-					<th scope="col">Business name</th>
-					<th scope="col">State</th>
-					<th scope="col">City</th>
-					<th scope="col">Address</th>
-					<th scope="col">Estrellas</th>
-					<th scope="col">Categorias</th>
+					<th scope="col">Title</th>
+					<th scope="col">Score</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for i in resp %}
 				<tr>
-					<th scope="row">{{i.business_id}}</td>
-					<td>{{i.name}}</td>
-					<td>{{i.state}}</td>
-					<td>{{i.city}}</td>
-					<td>{{i.address}}</td>
-					<td>{{i.stars}}</td>
-					<td>{{i.categories}}</td>
+					<th scope="row">{{i.title}}</td>
+					<td>{{i.score}}</td>
 				</tr>
 				{% endfor %}
 			<tbody>
