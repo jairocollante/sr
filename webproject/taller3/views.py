@@ -59,6 +59,26 @@ class T3RecommenderView(View):
     def post(self, request, *args, **kwargs):
         print("post")
 
+class T3MoviesView(View):
+    template_name='taller3/movies.html'
+    def get(self, request, *args, **kwargs):
+        userid = request.session.get('usuario_activo')
+        if userid:
+            USERNAME = "neo4j"
+            PASS = "Grupo06" #default
+            graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
+            userId = f'User {userid}'
+            print ("Usuario " + userId)
+            
+            rec = graph.run('MATCH (u:User {id: $userId})-[r:RATED ]->(movies) RETURN movies.title AS movie, r.rating AS rating', userId=userId)                            
+            data=rec.data()
+            return render(request, self.template_name,{'usuario_activo':userId, 'resp':data})
+        else:
+            return redirect('t3_login')
+
+    def post(self, request, *args, **kwargs):
+        print("post")
+
 class T3LoginView(FormView):
     template_name='taller3/login.html'
     form_class= T3LoginForm

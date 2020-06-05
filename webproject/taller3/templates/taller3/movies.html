@@ -1,0 +1,56 @@
+{% extends "taller3/template.html" %}
+{% load static %}
+
+{% block contenido %}
+	
+<div class="card mt-4">          
+	<div class="card-body">
+		<h3 class="card-title">Modelo </h3>
+	</div>
+</div>        
+
+	
+<div class="card card-outline-secondary my-4">
+	<div class="card-header">
+		Películas calificadas por el usuario activo
+	</div>
+	<div class="card-body">
+		<p>Usuario {{usuario_activo}}.</p>
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">User id</th>
+		       
+		    </tr>
+		  </thead>
+		  <tbody>		
+			<tr> 
+				<th scope="row">{{usuario_activo.userid}}</th>
+				
+			</tr>	
+		  <tbody>
+		</table>
+		
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Movie</th>
+					<th scope="col">Rating</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for i in resp %}
+				<tr>
+					<th scope="row">{{i.movie}}</td>
+					<td>{{i.rating}}</td>
+				</tr>
+				{% endfor %}
+			<tbody>
+		</table>
+
+		<hr>           
+	</div>
+</div>
+
+              
+ {% endblock contenido %}
