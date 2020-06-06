@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic.edit import FormView
 
-from taller3.forms import T3LoginForm
+from taller3.forms import T3LoginForm, T3UserForm
 from taller3.models import User
 
 from py2neo import Graph, Node, NodeMatcher
@@ -112,3 +112,24 @@ class T3LoginView(FormView):
         print("contexto")
         context['usuario_activo'] = self.form_class(request.POST)
         return context
+    
+class T3UserFormView(FormView):
+    form_class = T3UserForm
+    initial = {'key': 'value'}
+    template_name='taller3/newUser.html'
+    sucess_url='login'
+    
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+        
+      
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save(using='db_t3')
+            return redirect('t3_login')
+            
+        else:
+            return render(request, self.template_name, {'form': form})

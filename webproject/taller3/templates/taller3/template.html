@@ -60,7 +60,8 @@
           <a href="{% url 't3_login' %}" class="list-group-item">Login</a>
           <a href="{% url 't3_sistema' %}" class="list-group-item">Recomendación</a>
           <a href="{% url 't3_movies' %}" class="list-group-item">Películas</a>
-           <h3 class="my-4"> Usuario activo = {{ request.session.usuario_activo }}</h3>
+          <a href="{% url 't3_newUser' %}" class="list-group-item">Nuevo Usuario</a>
+           <h3 class="my-4"> Usuario activo =  {{request.session.usuario_activo}} </h3>
         </div>
       </div>
       

@@ -14,3 +14,18 @@ class T3LoginForm(forms.Form):
         usuario = User.objects.using('db_t3').filter(user_id=userid)
         print("encontrado", usuario)        
         return usuario
+
+class T3UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
+    
+    
+    def clean_user_id(self):
+        id = self.cleaned_data['user_id']        
+        usuario = User.objects.using('db_t3').filter(user_id=id)
+        
+        if usuario:
+            raise forms.ValidationError("Usuario ya existe!")
+        
+        return id
