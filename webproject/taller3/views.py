@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic.edit import FormView
+from django.forms import formset_factory
 
-from taller3.forms import T3LoginForm, T3UserForm
+from taller3.forms import T3LoginForm, T3UserForm, T3SearchForm, T3RatingForm
 from taller3.models import User
 
 from py2neo import Graph, Node, NodeMatcher
@@ -129,7 +130,87 @@ class T3UserFormView(FormView):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.save(using='db_t3')
+            
+            USERNAME = "neo4j"
+            PASS = "Grupo06" #default
+            graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
+            sql = 'CREATE (u:User {id:\''+str(obj.user_id)+'\'}) return u'
+            rec = graph.run(sql)                    
+            data=rec.data()
+            
             return redirect('t3_login')
             
         else:
             return render(request, self.template_name, {'form': form})
+        
+class T3SearchFormView(FormView):
+    form_class = T3SearchForm
+    initial = {'key': 'value'}
+    template_name='taller3/search.html'
+    sucess_url='t3_found'
+    
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+        
+      
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            print('buscar=',text )
+            
+            USERNAME = "neo4j"
+            PASS = "Grupo06" #default
+            graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
+            sql = 'MATCH (m:Movie) where toLower(m.title) =~\'.*'+text+'.*\' return m.title as movie_title, m.id as movie_id'
+            print(sql)
+            rec = graph.run(sql)                    
+            data=rec.data()
+            
+            print(data)
+            
+            initial= [{'title':'Rapido y furioso','id':'1212'},{'title':'Pelicula 2','id':'1554'}]
+            
+            form = T3RatingForm(initial = initial)
+            
+            ratingFormSet = formset_factory(form)
+            
+            
+            return render(request, 'taller3/found.html', {'form': ratingFormSet})
+            
+                    
+            
+class T3FoundFormView(FormView):
+    form_class = T3RatingForm
+    initial = {'key': 'value'}
+    template_name='taller3/found.html'
+    sucess_url='found'
+    
+    def get(self, request, *args, **kwargs):
+        movies = kwargs.movies
+        print(movies)
+        form = self.form_class(initial=self.initial)
+        ratingFormSet = formset_factory(form)
+        
+        
+        return render(request, self.template_name, {'form': ratingFormSet})
+        
+      
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            print('buscar=',text )
+            
+            USERNAME = "neo4j"
+            PASS = "Grupo06" #default
+            graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
+            sql = 'MATCH (m:Movie) where toLower(m.title) =~\'.*'+text+'.*\' return m.title as movie_title, m.id as movie_id'
+            print(sql)
+            rec = graph.run(sql)                    
+            data=rec.data()
+            
+            print(data)
+            
+            return render(request, self.template_name,{'resp':data})

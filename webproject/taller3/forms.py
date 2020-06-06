@@ -29,3 +29,12 @@ class T3UserForm(ModelForm):
             raise forms.ValidationError("Usuario ya existe!")
         
         return id
+    
+class T3SearchForm(forms.Form):
+    text = forms.CharField(label='Pelicula a calificar:', required=True, min_length=4,  max_length=20, help_text='Escriba el titulo o parte del mismo')       
+    
+class T3RatingForm(forms.Form):
+    id = forms.CharField()   
+    title = forms.CharField() 
+    rating = forms.IntegerField(min_value=1, max_value=5)          
+    

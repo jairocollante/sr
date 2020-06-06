@@ -9,4 +9,6 @@ urlpatterns = [
     path('sistema/', views.T3RecommenderView.as_view(), name='t3_sistema'),
     path('movies/', views.T3MoviesView.as_view(), name='t3_movies'),
     path('newUser', views.T3UserFormView.as_view(), name='t3_newUser'),  
+    path('search', views.T3SearchFormView.as_view(), name='t3_search'),  
+    path('found', views.T3FoundFormView.as_view(), name='t3_found'),  
     ]

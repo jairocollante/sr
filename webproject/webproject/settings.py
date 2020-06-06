@@ -80,6 +80,8 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = ['taller3.routers.Router']
+
 ROOT_URLCONF= 'webproject.urls'
 
 # Password validation
