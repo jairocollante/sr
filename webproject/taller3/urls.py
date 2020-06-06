@@ -7,6 +7,7 @@ urlpatterns = [
     path('taller3', TemplateView.as_view(template_name='taller3/index.html'), name='t3_index'),
     path('login', views.T3LoginView.as_view(), name='t3_login'),
     path('sistema/', views.T3RecommenderView.as_view(), name='t3_sistema'),
+    path('sistema2/', views.T3RecommenderView2.as_view(), name='t3_sistema2'),
     path('movies/', views.T3MoviesView.as_view(), name='t3_movies'),
     path('newUser', views.T3UserFormView.as_view(), name='t3_newUser'),  
     path('search', views.T3SearchFormView.as_view(), name='t3_search'),  
