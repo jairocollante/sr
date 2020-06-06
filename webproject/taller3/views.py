@@ -232,7 +232,7 @@ class T3RecommenderView2(View):
             print ("Usuario " + userId)
             
             #data = []
-            data = self.get_full_recomendacion_user(self, graph, 'User 1', 10, 5, 2, "DIRECTED", "ACTED")
+            data = self.get_full_recomendacion_user(graph, userId, n, 5, 2, "DIRECTED", "ACTED")
             return render(request, self.template_name, {'usuario_activo':userId, 'resp':data})
         else:
             return redirect('t3_login')
@@ -272,18 +272,18 @@ class T3RecommenderView2(View):
 
         recomendacion = [] 
         existentes = []
-        user_perfil = self.get_full_perfil_user(self, graph, user, perfil)
+        user_perfil = self.get_full_perfil_user(graph, user, perfil)
         print("Perfil del Usuario [%s]:" % user)
         for per in user_perfil:
             print(per)
         
-        print (self.get_items_user(self, graph, user))
-        user_peliculas = list(self.get_items_user(self, graph, user)['n.title'])
+        print (self.get_items_user(graph, user))
+        user_peliculas = list(self.get_items_user(graph, user)['n.title'])
         
         print("Perfil usuarios similares")
-        perfil_similares = self.get_full_perfil_other_user(self, graph, user, k, perfil)
+        perfil_similares = self.get_full_perfil_other_user(graph, user, k, perfil)
         print("Se encontro el perfil para ", len(perfil_similares), " Usuarios similares")
-        mas_cercanos = self.full_distancia_user_others(self, graph, user_perfil, perfil_similares, s)
+        mas_cercanos = self.full_distancia_user_others(graph, user_perfil, perfil_similares, s)
         print("Los ", s, " usuarios mas cercanos :")
         print(mas_cercanos)
 
@@ -291,7 +291,7 @@ class T3RecommenderView2(View):
         
         peliculas_ = []
         for usuario in mas_cercanos:
-            for indx,peli in self.get_items_user(self, graph, usuario[0]).iterrows():
+            for indx,peli in self.get_items_user(graph, usuario[0]).iterrows():
                 if peli['n.title'] not in peliculas_:
                     peliculas_.append(peli['n.title'])
         
@@ -311,31 +311,29 @@ class T3RecommenderView2(View):
 
     def get_full_perfil_user(self, graph, user, perfil):
         #perfiles = ['DIRECTED', 'ACTED']
-        peliculas_user = self.get_items_user(self, graph, user)
-        full_perfil =[]
-        #print("secubdario ",perfil)
+        peliculas_user = self.get_items_user(graph, user)
+        full_perfil = []
     
         if len(perfil) > 0:
             perfiles =[]
             for i in range(0,len(perfil)):  
-                #print(perfil[i])
-                self.full_perfil.extend(get_perfil_user_(self, graph, peliculas_user, perfil[i]))
+                full_perfil.extend(self.get_perfil_user_(graph, peliculas_user, perfil[i]))
         
         return full_perfil
 
     def get_full_perfil_other_user(self, graph, user, n,perfil):
-        dat = self.get_similar_users(self, graph ,user, n)
+        dat = self.get_similar_users(graph ,user, n)
         perfiles_other ={}
         for index,other in dat.iterrows():
             user_other = other['to']
             full_perfil =[]
             
-            peliculas_user = self.get_items_user(self, graph, user_other)
+            peliculas_user = self.get_items_user(graph, user_other)
             if len(perfil) > 0:
                 perfiles =[]
                 for i in range(0,len(perfil)):
                     #print(perfil)
-                    full_perfil.extend(self.get_perfil_user_(self, graph, peliculas_user,perfil[i]))
+                    full_perfil.extend(self.get_perfil_user_(graph, peliculas_user,perfil[i]))
                 perfiles_other[user_other] =full_perfil
                 
         return perfiles_other
