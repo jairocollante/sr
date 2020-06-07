@@ -67,6 +67,7 @@ class T3RecommenderView(View):
                 MATCH (p1:User {id: '%s'})-[rated1:RATED]->(m)<-[rated2:RATED]-(p2:User) WHERE p2 <> p1
                 WITH p1, gds.alpha.similarity.asVector(m, rated1.rating) AS p1Vector, 
                     p2, gds.alpha.similarity.asVector(m, rated2.rating) AS p2Vector 
+                LIMIT 190000
                 RETURN p1.id AS from, 
                     p2.id AS to,  
                     gds.alpha.similarity.pearson(p1Vector, p2Vector, {vectorType: "maps"}) AS similarity 
