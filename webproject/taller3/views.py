@@ -46,10 +46,9 @@ class T3RecommenderView(View):
             data2 = self.get_full_recomendacion_user(graph, userId, n2, 5, 2, "DIRECTED", "ACTED")
 
             for recomendacion in data2:
-                if recomendacion not in data['title']:
-                    data.append(recomendacion)
-                    if (len(data) >= n2):
-                        break;
+                data.append(recomendacion)
+                if (len(data) >= n2):
+                    break;
 
             return render(request, self.template_name,{'usuario_activo':userId, 'resp':data})
         else:
