@@ -3,25 +3,38 @@
 
 {% block contenido %}
 	
-<div class="card mt-4">          
-	<div class="card-body">
-		<h3 class="card-title">Modelo </h3>
-	</div>
-</div>        
 
-	
 <div class="card card-outline-secondary my-4">
 	<div class="card-header">
-		Califique las peliculas que haya visto.
+		Califique las peliculas que haya visto. (Para el usuario activo)
 	</div>
 	<div class="card-body">
 		
-		<form method="post"> {% csrf_token %}
-		    <table>
-		        {{ formset }}
-		    </table>
-		</form>
-		           
+		<table class="table table-hover">
+			<thead>
+				<tr>
+				  <th scope="col">Id</th>
+				  <th scope="col">Pelicula</th>
+				  <th scope="col">Rating</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="rating" method="post">{% csrf_token %}
+					{{ formset.management_form }}
+					{% for form in formset %}
+										
+											
+								<tr> 						
+								<th>{{form.id}}</th>
+								<th>{{form.title}} </th>
+								<th>{{form.rating }}</th>
+								</tr>
+						
+					{% endfor %}
+					<input  type="submit" value="Enviar">
+				</form>
+			</tbody>
+		</table>	 
 	</div>
 </div>
 

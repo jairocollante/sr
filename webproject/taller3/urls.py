@@ -11,5 +11,6 @@ urlpatterns = [
     path('movies/', views.T3MoviesView.as_view(), name='t3_movies'),
     path('newUser', views.T3UserFormView.as_view(), name='t3_newUser'),  
     path('search', views.T3SearchFormView.as_view(), name='t3_search'),  
-    path('found', views.T3FoundFormView.as_view(), name='t3_found'),  
+    path('found', TemplateView.as_view(), name='t3_found'),  
+    path('rating', views.T3RatingSave, name='t3_rating'),  
     ]

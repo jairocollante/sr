@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms import BaseFormSet
 
 from taller3.models import User
 
@@ -36,5 +37,7 @@ class T3SearchForm(forms.Form):
 class T3RatingForm(forms.Form):
     id = forms.CharField()   
     title = forms.CharField() 
-    rating = forms.IntegerField(min_value=1, max_value=5)          
+    rating = forms.FloatField(min_value=1, max_value=5, required=False)
+    
+
     
