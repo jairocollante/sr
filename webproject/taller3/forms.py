@@ -37,7 +37,7 @@ class T3SearchForm(forms.Form):
 class T3RatingForm(forms.Form):
     id = forms.CharField()   
     title = forms.CharField() 
-    rating = forms.IntegerField(min_value=1, max_value=5, required=False)
+    rating = forms.FloatField(min_value=1, max_value=5, required=False)
     
 
     

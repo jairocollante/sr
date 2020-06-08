@@ -44,8 +44,15 @@ class T3RecommenderView(View):
                             'ORDER BY score DESC LIMIT toInteger($n);', userid=userId, n=n)
             data = rec.data()
             data2 = self.get_full_recomendacion_user(graph, userId, n2, 5, 2, "DIRECTED", "ACTED")
+            data_list = [d['title'] for d in data]
+            print (data_list)
 
             for recomendacion in data2:
+                
+                if (recomendacion in data_list):
+                    print("Exitente: %s" % recomendacion)
+                    continue
+                
                 data.append(recomendacion)
                 if (len(data) >= n2):
                     break;
@@ -163,6 +170,8 @@ class T3RecommenderView(View):
         total_gen = 0
         for index,peli in peliculas_user.iterrows():
             rating = float(peli['r.rating']) / 5
+            if (peli['n.title'] is None):
+                continue
             guery_gen = gene % peli['n.title'].replace("'","\\'")
             #print(guery_gen)
             generos_user = graph.run(guery_gen).to_data_frame()
@@ -289,7 +298,7 @@ class T3UserFormView(FormView):
             USERNAME = "neo4j"
             PASS = "Grupo06" #default
             graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
-            sql = 'CREATE (u:User {id:\''+str(obj.user_id)+'\'}) return u'
+            sql = 'CREATE (u:User {id:\'User '+str(obj.user_id)+'\'}) return u'
             rec = graph.run(sql)                    
             data=rec.data()
             
@@ -313,12 +322,13 @@ class T3SearchFormView(FormView):
         form = self.form_class(request.POST)
         if form.is_valid():
             text = form.cleaned_data['text']
-            print('buscar=',text )
+            text = text.lower()
+            print('buscar=', text)
             
             USERNAME = "neo4j"
             PASS = "Grupo06" #default
             graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
-            sql = 'MATCH (m:Movie) where toLower(m.title) =~\'.*'+text+'.*\' return m.title as title, m.id as id'
+            sql = 'MATCH (m:Movie) where toLower(m.title) =~\'.*' + text + '.*\' return m.title as title, m.id as id'
             print(sql)
             rec = graph.run(sql)                    
             data=rec.data()
@@ -330,8 +340,7 @@ class T3SearchFormView(FormView):
             formSet = ratingFormSet(initial=data)
             
             return render(request, 'taller3/found.html', {'formset': formSet})
-            
-            
+                        
 def T3RatingSave(request):
     if request.method == 'POST':
         ratingFormSet = formset_factory(T3RatingForm,extra=0)    
@@ -348,7 +357,7 @@ def T3RatingSave(request):
                     rating = form.cleaned_data.get('rating')
                     if rating:
                         user_id = request.session.get('usuario_activo')                       
-                        sql = 'MATCH (u:User{id:\''+str(user_id)+'\'}), (m:Movie{id:\''+str(movie_id)+'\'}) CREATE(u)-[:RATED{rating:\''+str(rating)+'\', timestamp:\'99999\'}]->(m)'
+                        sql = 'MATCH (u:User{id:\'User '+str(user_id)+'\'}), (m:Movie{id:\''+str(movie_id)+'\'}) CREATE(u)-[:RATED{rating:toFloat(\''+str(rating)+'\'), timestamp:\'99999\'}]->(m)'
                         print(sql)
                         rec = graph.run(sql)                    
                         data=rec.data()
